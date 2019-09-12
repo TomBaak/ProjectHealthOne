@@ -40,14 +40,14 @@
     </div>
 </nav>
 
-<div class="row">
-    <div class="col">
-        <div class="jumbotron jumbotron-fluid text-center">
-            <h1>Uitgeschreven recepten</h1>
-        </div>
-        <div class="container">
+<div class="row bg-transparent" style="margin-top: 1%">
+    <div class="col" >
+        <div class="container-fluid" style="width: 90%; margin-bottom: 2%">
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col">
+                    <div class="jumbotron jumbotron-fluid text-center">
+                        <h1>Uitgeschreven recepten</h1>
+                    </div>
                     <table class="table table-striped">
                         <tr>
                             <td><p>Naam:</p></td>
@@ -365,8 +365,11 @@
                         </tr>
                     </table>
                 </div>
+                <span class=" border border-left-0 border-top-0 border-bottom-0"></span>
                 <div class="col-sm-3">
-                    <h1>Nieuw Recept</h1>
+                    <div class="jumbotron jumbotron-fluid text-center bg-success text-white">
+                        <h1>Nieuw Recept</h1>
+                    </div>
                     <div class="form-group">
                         <label for="name">Naam:</label>
                         <input type="text" class="form-control" id="name">
@@ -413,12 +416,12 @@
             </div>
         </div>
 
-        <div class="jumbotron jumbotron-fluid text-center bg-danger text-white">
-            <h1>Niet opgehaalde recepten</h1>
-        </div>
-        <div class="container">
+        <div class="container-fluid" style="width: 90%">
             <div class="row">
                 <div class="col">
+                    <div class="jumbotron jumbotron-fluid text-center bg-danger text-white">
+                        <h1>Niet opgehaalde recepten</h1>
+                    </div>
                     <table class="table table-striped">
                         <tr>
                             <td><p>Naam:</p></td>
