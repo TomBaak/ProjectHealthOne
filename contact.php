@@ -21,12 +21,8 @@
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <div class="container">
-        <img src="img/logo.png" class="float-left d-none d-md-block" style="width: 10%">
-        <img src="img/logo.png" class="float-left d-block d-md-none" style="width: 15%">
-        <h1>ZilverenKruis</h1>
-    </div>
-    <div class="container">
-        <p>Zorgcentrum Haaglanden</p>
+        <img src="img/logo.png" style="width: 8%">
+        <p>Zilverenkruis </p>
     </div>
 </div>
 
