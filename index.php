@@ -54,6 +54,26 @@
         </div>
     </div>
     <div class="row">
+        <div class="col d-none">
+            <h1>Inloggen</h1>
+            <form action="/action_page.php">
+                <div class="form-group">
+                    <label for="email">Email adres:</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Wachtwoord:</label>
+                    <input type="password" class="form-control" id="pwd">
+                </div>
+                <div class="form-group form-check">
+                    <div class="custom-control custom-checkbox mb-3" style="padding-left: 0.25rem">
+                        <input type="checkbox" class="custom-control-input" id="customCheck" name="remember">
+                        <label class="custom-control-label" for="customCheck">Onthoud mij</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+        </div>
         <div class="col">
             <h1>Type gebruiker</h1>
             <div class="btn-group-vertical" style="width: 100%; margin-top: 5%; margin-bottom: 5%">
@@ -62,19 +82,14 @@
                 <button type="button" class="btn btn-secondary">Appotheker</button>
             </div>
         </div>
-        <div class="col-sm-8 ">
+        <div class="col">
             <h1>Gebruik</h1>
             <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus turpis elit, consequat consectetur dui
                 sed, porttitor sagittis mauris. Aliquam blandit felis purus, non facilisis ex lacinia interdum. In at
                 venenatis elit, quis tincidunt nisi. Aenean lobortis erat eros, vel feugiat felis egestas ac. Integer ut
                 mi at mi fermentum placerat id sit amet arcu. Fusce ultricies sem at velit suscipit ultrices. Aenean
                 rutrum metus sem, id viverra nibh euismod sit amet. Fusce a efficitur nunc, quis iaculis lorem. Aliquam
-                a odio imperdiet, aliquam urna nec, vestibulum nulla.
-
-                Quisque tempor lacus id vehicula eleifend. Pellentesque eget auctor ante. Duis porta nibh sit amet justo
-                viverra vulputate. Etiam vulputate ultricies nisi, eu tincidunt eros rhoncus sit amet. Donec turpis
-                nunc, viverra sit amet purus a, porttitor pellentesque est. Nulla sollicitudin erat nec sapien suscipit,
-                et lobortis justo porttitor. Donec ut ante nisi. </p>
+                a odio imperdiet, aliquam urna nec, vestibulum nulla. </p>
         </div>
     </div>
 </div>

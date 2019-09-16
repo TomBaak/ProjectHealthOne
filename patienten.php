@@ -55,6 +55,13 @@
                     <div class="jumbotron jumbotron-fluid text-center">
                         <h1>Patienten</h1>
                     </div>
+                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
+                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
+                               aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn bg-primary text-white">Zoek</i></button>
+                        </div>
+                    </div>
                     <table class="table table-striped">
                         <tr>
                             <td><p>Naam:</p></td>

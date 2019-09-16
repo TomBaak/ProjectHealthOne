@@ -41,10 +41,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="patienten.php">Patienten</a>
             </li>
-            
+
         </ul>
     </div>
 </nav>
+
+<div class="container">
+
+</div>
 
 <div class="row bg-transparent" style="margin: 0; margin-top: 1%">
     <div class="col">
@@ -53,6 +57,13 @@
                 <div class="col">
                     <div class="jumbotron jumbotron-fluid text-center">
                         <h1>Uitgeschreven recepten</h1>
+                    </div>
+                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
+                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
+                               aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn bg-primary text-white">Zoek</i></button>
+                        </div>
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -139,7 +150,8 @@
                             <td class="d-none d-lg-table-cell"><p>000100</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
-                                        data-target="#myModal">Bekijk</button>
+                                        data-target="#myModal">Bekijk
+                                </button>
                             </td>
                         </tr>
                     </table>
@@ -201,6 +213,13 @@
                 <div class="col">
                     <div class="jumbotron jumbotron-fluid text-center bg-danger text-white">
                         <h1>Niet opgehaalde recepten</h1>
+                    </div>
+                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
+                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
+                               aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn bg-primary text-white">Zoek</i></button>
+                        </div>
                     </div>
                     <table class="table table-striped">
                         <thead>
