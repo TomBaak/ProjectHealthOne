@@ -1,0 +1,17 @@
+.modal-lg {
+    max-width: 90% !important;
+}
+
+@media screen and (max-width: 385px) {
+    .jumbotron > h1{
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .modal-lg {
+        max-width: 90%;
+        margin: auto !important;
+        margin-top: 5% !important;
+    }
+}
