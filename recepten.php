@@ -21,8 +21,14 @@
 </head>
 <body class="mw-100">
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1>ZilverenKruis</h1>
-    <p>Zorgcentrum Haaglanden</p>
+    <div class="container">
+        <img src="img/logo.png" class="float-left d-none d-md-block" style="width: 10%">
+        <img src="img/logo.png" class="float-left d-block d-md-none" style="width: 15%">
+        <h1>ZilverenKruis</h1>
+    </div>
+    <div class="container">
+        <p>Zorgcentrum Haaglanden</p>
+    </div>
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -41,10 +47,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="patienten.php">Patienten</a>
             </li>
-            
+            <li class="nav-item">
+                <a class="nav-link" href="contact.php">Contact</a>
+            </li>
         </ul>
     </div>
 </nav>
+
+<div class="container">
+
+</div>
 
 <div class="row bg-transparent" style="margin: 0; margin-top: 1%">
     <div class="col">
@@ -53,6 +65,10 @@
                 <div class="col">
                     <div class="jumbotron jumbotron-fluid text-center">
                         <h1>Uitgeschreven recepten</h1>
+                    </div>
+                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
+                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
+                               aria-label="Search" id="myInput">
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -71,8 +87,21 @@
                             </td>
                         </tr>
                         </thead>
+                        <tbody id="myTable">
                         <tr>
                             <td><p>T. Baak</p></td>
+                            <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
+                            <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
+                            <td><p>02/08/2019</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000099</p></td>
+                            <td>
+                                <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
+                                        data-target="#myModal">Bekijk
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>R. Amatkario</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
@@ -84,11 +113,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><p>T. Baak</p></td>
+                            <td><p>S. Broeckeart</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000101</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
@@ -96,11 +125,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><p>T. Baak</p></td>
+                            <td><p>A. de Klerck</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000102</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
@@ -108,11 +137,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><p>T. Baak</p></td>
+                            <td><p>I. Habiboellah</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000103</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
@@ -120,28 +149,18 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><p>T. Baak</p></td>
+                            <td><p>C. Soekdew</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000104</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
                                 </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td><p>T. Baak</p></td>
-                            <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
-                            <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
-                            <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
-                            <td>
-                                <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
-                                        data-target="#myModal">Bekijk</button>
-                            </td>
-                        </tr>
+                        </tbody>
                     </table>
                 </div>
                 <span class=" border border-left-0 border-top-0 border-bottom-0 d-none d-xl-block"></span>
@@ -196,11 +215,15 @@
             </div>
         </div>
 
-        <div class="container-fluid" style="width: 90%">
+        <div class="container-fluid" style="width: 90%; min-height: 40%;">
             <div class="row">
-                <div class="col">
+                <div class="col" >
                     <div class="jumbotron jumbotron-fluid text-center bg-danger text-white">
                         <h1>Niet opgehaalde recepten</h1>
+                    </div>
+                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
+                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
+                               aria-label="Search" id="myInput2">
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -219,6 +242,7 @@
                             </td>
                         </tr>
                         </thead>
+                        <tbody  id="myTable2">
                         <tr>
                             <td><p>T. Baak</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
@@ -232,11 +256,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><p>T. Baak</p></td>
+                            <td><p>R. Amatkario</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000109</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
@@ -244,17 +268,18 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><p>T. Baak</p></td>
+                            <td><p>C. Soekdew</p></td>
                             <td class="d-none d-lg-table-cell"><p>Paracetemol</p></td>
                             <td class="d-none d-lg-table-cell"><p>20/03/2002</p></td>
                             <td><p>02/08/2019</p></td>
-                            <td class="d-none d-lg-table-cell"><p>000100</p></td>
+                            <td class="d-none d-lg-table-cell"><p>000156</p></td>
                             <td>
                                 <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
                                 </button>
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -366,3 +391,24 @@
 </div>
 
 </html>
+
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+    $(document).ready(function(){
+        $("#myInput2").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable2 tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+
+</script>

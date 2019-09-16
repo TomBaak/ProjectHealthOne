@@ -22,8 +22,14 @@
 </head>
 <body>
 <div class="jumbotron text-center" style="margin: 0; margin-bottom:0">
-    <h1>ZilverenKruis</h1>
-    <p>Zorgcentrum Haaglanden</p>
+    <div class="container">
+        <img src="img/logo.png" class="float-left d-none d-md-block" style="width: 10%">
+        <img src="img/logo.png" class="float-left d-block d-md-none" style="width: 15%">
+        <h1>ZilverenKruis</h1>
+    </div>
+    <div class="container">
+        <p>Zorgcentrum Haaglanden</p>
+    </div>
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -42,7 +48,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="patienten.php">Patienten</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="contact.php">Contact</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -55,13 +63,20 @@
                     <div class="jumbotron jumbotron-fluid text-center">
                         <h1>Patienten</h1>
                     </div>
+                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
+                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
+                               aria-label="Search" id="myInput">
+                    </div>
                     <table class="table table-striped">
+                        <thead>
                         <tr>
-                            <td><p>Naam:</p></td>
+                            <td style="min-width: 30%"><p>Naam:</p></td>
                             <td><p>Geboorte datum:</p></td>
                             <td><p>Verzekerings Nummer:</p></td>
                             <td></td>
                         </tr>
+                        </thead>
+                        <tbody id="myTable">
                         <tr>
                             <td><p>T. Baak</p></td>
                             <td><p>20/03/2002</p></td>
@@ -72,6 +87,17 @@
                                 </button>
                             </td>
                         </tr>
+                        <tr>
+                            <td><p>C. Soekdew</p></td>
+                            <td><p>30/01/2002</p></td>
+                            <td><p>000101</p></td>
+                            <td>
+                                <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
+                                        data-target="#myModal">Bekijk
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -148,3 +174,14 @@
 
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
