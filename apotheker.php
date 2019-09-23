@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -49,19 +50,74 @@
     </div>
 </nav>
 
-<body>
-<div class="container" style="margin-top: 1%">
-    <div class="jumbotron">
-        <h1>Contact</h1>
+<div class="container" style="margin-top: 2.5rem">
+    <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
+        <h1>Apotheek</h1>
+        <p></p>
     </div>
-    <dl class="list-group">
-        <dt class="list-group-item">Email</dt>
-        <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
-        <dt class="list-group-item">Telefoon</dt>
-        <dd class="list-group-item">+31 612547858</dd>
-    </dl>
+
+    <h2>Patiënten</h2>
+    <p></p>
+    <div class="active-pink-3 active-pink-4 mb-4">
+        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Voornaam</th>
+            <th>Achternaam</th>
+            <th>Patiëntnummer</th>
+            <th>Recepten</th>
+        </tr>
+        </thead>
+        <body>
+        <tr>
+            <td>Tom</td>
+            <td>Baak</td>
+            <td>037926</td>
+            <td>
+                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>Rowan</td>
+            <td>Amatkario</td>
+            <td>194346</td>
+            <td>
+                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Sebas</td>
+            <td>Dooley</td>
+            <td>894356</td>
+            <td>
+                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Vito</td>
+            <td>Kloots</td>
+            <td>672359</td>
+            <td>
+                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Jeffrey</td>
+            <td>Vink</td>
+            <td>413869</td>
+            <td>
+                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+            </td>
+        </tr>
+        </body>
+    </table>
 
 </div>
+
+
 </body>
 
 </html>
