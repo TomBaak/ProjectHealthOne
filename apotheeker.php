@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-        <title>HealtOne: Home</title>
+        <title>HealtOne: Apotheeker</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -53,40 +52,6 @@
                 </form>
             </div>
         </nav>
-        <div class="container" style="margin-top: 2.5rem">
-            <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
-                <h1>Kies gebruiker</h1>
-                <p>Kies uw specialisatie</p>
-            </div>
-            <div class="row">
-                <div class="col-sm-4"  style="margin-bottom: 2.5rem">
-                    <div class="card">
-                        <img class="card-img-top" src="img/doc.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body">
-                            <h4 class="card-title">(Huis)Arts</h4>
-                            <a href="#" class="btn btn-primary">Kies specialisme</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4"  style="margin-bottom: 2.5rem">
-                    <div class="card">
-                        <img class="card-img-top" src="img/pharmacist_23-2148174589.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body">
-                            <h4 class="card-title">Apotheek</h4>
-                            <a href="#" class="btn btn-primary">Kies specialisme</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4"  style="margin-bottom: 2.5rem">
-                    <div class="card">
-                        <img class="card-img-top" src="img/insurance.jpg" alt="Card image" style="width:100%">
-                        <div class="card-body">
-                            <h4 class="card-title">Verzekeraar</h4>
-                            <a href="#" class="btn btn-primary">Kies specialisme</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </body>
 </html>
