@@ -20,18 +20,14 @@
 </head>
 <body>
 
-<div class="jumbotron text-center" style="margin-bottom:0">
+<div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
     <div class="container">
-        <img src="img/logo.png" class="float-left d-none d-md-block" style="width: 10%">
-        <img src="img/logo.png" class="float-left d-block d-md-none" style="width: 15%">
-        <h1>ZilverenKruis</h1>
-    </div>
-    <div class="container">
-        <p>Zorgcentrum Haaglanden</p>
+        <img src="img/logo.png" style="width: 8%">
+        <p>Zilverenkruis </p>
     </div>
 </div>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-danger navbar-dark">
     <a class="navbar-brand" href="#">Navigatie</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
