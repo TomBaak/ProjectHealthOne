@@ -111,7 +111,7 @@ include("dbconnection.php");
                                 echo "</td><td><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button>";
                                 echo "</td><td><button type=\"button\" class=\"btn bg-dark text-white\" data-toggle=\"modal\"";
                                 echo "data-target=\"#myModal\" id=\" " . $data['vernum'] . " \">Bekijk</button></td>";*/
-                                echo "<td><form action=\"\"><button type=\"button\" class=\"btn bg-dark text-white \" data-toggle=\"modal\" data-target=\"#myModal\">Bekijk</button></form></td>";
+                                echo "<td><a href='patienten.php?id='><button type=\"button\" class=\"btn bg-dark text-white \" data-toggle=\"modal\" data-target=\"#myModal\">Bekijk</button></a></td>";
                                 echo "</tr>";
                             };
                         } catch (PDOException $e) {
