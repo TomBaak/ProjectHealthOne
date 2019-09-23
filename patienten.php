@@ -20,6 +20,13 @@
     <link rel="stylesheet" href="styles/overwrite.css">
     <link rel="stylesheet" href="styles/theme_HO.css">
 </head>
+
+<?php
+
+include("dbconnection.php");
+
+?>
+
 <body>
 <div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
     <div class="container">
@@ -65,8 +72,10 @@
                             <button class="btn btn-secondary" type="button">Zoek</button>
                         </div>
                     </div>
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button" data-toggle="modal"
-                            data-target="#newModal">Nieuwe patient</button>
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button"
+                            data-toggle="modal"
+                            data-target="#newModal">Nieuwe patient
+                    </button>
                     <table class="table table-striped" style="margin-top: 2rem">
                         <thead>
                         <tr>
@@ -79,23 +88,41 @@
                         </tr>
                         </thead>
                         <tbody id="myTable">
-                        <tr>
-                            <td><p>T. Baak</p></td>
-                            <td><p>20/03/2002</p></td>
-                            <td><p>000100</p></td>
-                            <td>
-                                <button type="button" class="btn bg-warning text-white " data-toggle="modal"
-                                        data-target="#editModal">Aanpassen</button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn bg-danger text-white" >Verwijder</button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn bg-dark text-white" data-toggle="modal"
-                                        data-target="#myModal">Bekijk
-                                </button>
-                            </td>
-                        </tr>
+                        <?php
+
+                        try {
+                            $query = $db->prepare("SELECT * FROM lijstpatienten");
+                            $query->execute();
+                            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach ($result as &$data) {
+                                echo "<tr>";
+                                echo "<td>";
+                                echo $data['naam'];
+                                echo "</td>";
+                                echo "<td>";
+                                echo $data['dob'];
+                                echo "</td>";
+                                echo "<td>";
+                                echo $data['vernum'];
+                                echo "</td>";
+                                /*echo "<td><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
+                                echo "data-target=\"#editModal\">Aanpassen</button>";
+                                echo "</td><td><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button>";
+                                echo "</td><td><button type=\"button\" class=\"btn bg-dark text-white\" data-toggle=\"modal\"";
+                                echo "data-target=\"#myModal\" id=\" " . $data['vernum'] . " \">Bekijk</button></td>";*/
+                                echo "<td><form action=\"\"><button type=\"button\" class=\"btn bg-dark text-white \" data-toggle=\"modal\" data-target=\"#myModal\">Bekijk</button></form></td>";
+                                echo "</tr>";
+                            };
+                        } catch (PDOException $e) {
+                            die("Error:" . $e->getMessage());
+                        };
+
+                        ?>
+
+
+
+
                         </tbody>
                     </table>
                 </div>
@@ -109,8 +136,25 @@
         <div class="modal-content">
 
             <!-- Modal Header -->
+            <?php
+
+            try {
+                $query = $db->prepare("SELECT * FROM lijstpatienten WHERE vernum = ");
+                $query->execute();
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as &$data) {
+                    $name = $data['naam'];
+                    $dob = $data['dob'];
+                    $vernum = $data['vernum'];
+                };
+            } catch (PDOException $e) {
+                die("Error:" . $e->getMessage());
+            };
+
+            ?>
             <div class="modal-header">
-                <h4 class="modal-title">Tom Baak</h4>
+                <h4 class="modal-title font-weight-bold"><?php echo $name; ?></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;
                 </button>
             </div>
@@ -127,9 +171,9 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><p>Tom Baak</p></td>
-                        <td><p>20/03/2002</p></td>
-                        <td><p>000100</p></td>
+                        <td><p><?php echo $name; ?></p></td>
+                        <td><p><?php echo $dob; ?></p></td>
+                        <td><p><?php echo $vernum; ?></p></td>
                     </tr>
                     </tbody>
                 </table>
@@ -137,13 +181,13 @@
                     <thead>
                     <tr>
                         <th><p>Naam:</p></th>
-                        <th><p>Medicijn:</p></th>
+                        <th><p>Geboorte datum:</p></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td><p>Tom Baak</p></td>
-                        <td><p>Paracetemol</p></td>
+                        <td><?php echo $name; ?></td>
+                        <td><?php echo $dob; ?></td>
                     </tr>
                     </tbody>
                     <thead>
@@ -154,7 +198,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><p>000100</p></td>
+                        <td><?php echo $vernum; ?></td>
                         <td><p></p></td>
                     </tr>
                     </tbody>
