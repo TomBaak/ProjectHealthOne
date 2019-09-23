@@ -59,17 +59,23 @@
                     <div class="jumbotron jumbotron-fluid text-center">
                         <h1>Patienten</h1>
                     </div>
-                    <div class="input-group md-form form-sm form-2 pl-0" style="margin-bottom: 2%">
-                        <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Zoeken"
-                               aria-label="Search" id="myInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Zoek naar patient">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">Zoek</button>
+                        </div>
                     </div>
-                    <table class="table table-striped">
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button" data-toggle="modal"
+                            data-target="#newModal">Nieuwe patient</button>
+                    <table class="table table-striped" style="margin-top: 2rem">
                         <thead>
                         <tr>
-                            <td style="min-width: 30%"><p>Naam:</p></td>
-                            <td><p>Geboorte datum:</p></td>
-                            <td><p>Verzekerings Nummer:</p></td>
-                            <td></td>
+                            <th style="min-width: 30%"><p>Naam:</p></th>
+                            <th><p>Geboorte datum:</p></th>
+                            <th><p>Verzekerings Nummer:</p></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody id="myTable">
@@ -78,17 +84,14 @@
                             <td><p>20/03/2002</p></td>
                             <td><p>000100</p></td>
                             <td>
-                                <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
-                                        data-target="#myModal">Bekijk
-                                </button>
+                                <button type="button" class="btn bg-warning text-white " data-toggle="modal"
+                                        data-target="#editModal">Aanpassen</button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td><p>C. Soekdew</p></td>
-                            <td><p>30/01/2002</p></td>
-                            <td><p>000101</p></td>
                             <td>
-                                <button type="button" class="btn bg-secondary text-white" data-toggle="modal"
+                                <button type="button" class="btn bg-danger text-white" >Verwijder</button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn bg-dark text-white" data-toggle="modal"
                                         data-target="#myModal">Bekijk
                                 </button>
                             </td>
@@ -168,16 +171,149 @@
     </div>
 </div>
 
+<div class="modal" id="editModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title text-warning font-weight-bold">Aanpassen</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-striped d-none d-xl-table">
+                    <thead>
+                    <tr>
+                        <th><p>Naam:</p></th>
+                        <th><p>Geboorte datum:</p></th>
+                        <th><p>Verzekerings Nummer:</p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" value="Tom Baak"></td>
+                        <td><input type="date" class="form-control"></td>
+                        <td><input type="text" class="form-control" value="000100"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- Kleine devices -->
+                <table class="table table-striped d-table d-xl-none">
+                    <thead>
+                    <tr>
+                        <th><p>Naam:</p></th>
+                        <th><p>Geboorte datum:</p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" value="Tom Baak"></td>
+                        <td><input type="date" class="form-control"></td>
+                    </tr>
+                    </tbody>
+                    <thead>
+                    <tr>
+                        <th><p>Verzekerings Nummer:</p></th>
+                        <th><p></p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" value="000100"></td>
+                        <td><p></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning text-white" data-dismiss="modal">
+                    Wijzig
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="newModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title text-success font-weight-bold">Nieuwe patient</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-striped d-none d-xl-table">
+                    <thead>
+                    <tr>
+                        <th><p>Naam:</p></th>
+                        <th><p>Geboorte datum:</p></th>
+                        <th><p>Verzekerings Nummer:</p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="Naam"></td>
+                        <td><input type="date" class="form-control"></td>
+                        <td><input type="text" class="form-control" placeholder="Verzekerings Nummer"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- Kleine devices -->
+                <table class="table table-striped d-table d-xl-none">
+                    <thead>
+                    <tr>
+                        <th><p>Naam:</p></th>
+                        <th><p>Geboorte datum:</p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="Naam"></td>
+                        <td><input type="date" class="form-control"></td>
+                    </tr>
+                    </tbody>
+                    <thead>
+                    <tr>
+                        <th><p>Verzekerings Nummer:</p></th>
+                        <th><p></p></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="Verzekerings nummer"></td>
+                        <td><p></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success text-white" data-dismiss="modal">
+                    Toevoegen
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
-
-<script>
-    $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
