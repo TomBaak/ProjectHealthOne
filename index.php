@@ -49,7 +49,7 @@
             <div class="search-container">
                 <form action="/action_page.php">
                     <input type="text" placeholder="Zoek patiënt..." name="zoeken">
-                    <button type="submit"><i class="fa fa-search"></i></button>
+                    <button type="submit"><u class="fa fa-search">Zoek</u></button>
                 </form>
             </div>
         </nav>
