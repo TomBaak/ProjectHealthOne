@@ -72,10 +72,11 @@ include("dbconnection.php");
                             <button class="btn btn-secondary" type="button">Zoek</button>
                         </div>
                     </div>
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button"
+
+                    <a><button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button"
                             data-toggle="modal"
                             data-target="#newModal">Nieuwe patient
-                    </button>
+                    </button></a>
                     <table class="table table-striped" style="margin-top: 2rem">
                         <thead>
                         <tr>
@@ -90,6 +91,7 @@ include("dbconnection.php");
                         <tbody id="myTable">
                         <?php
 
+
                         try {
                             $query = $db->prepare("SELECT * FROM lijstpatienten");
                             $query->execute();
@@ -101,17 +103,16 @@ include("dbconnection.php");
                                 echo $data['naam'];
                                 echo "</td>";
                                 echo "<td>";
-                                echo $data['dob'];
+                                echo date("m-d-Y", strtotime($data['dob']));
                                 echo "</td>";
                                 echo "<td>";
                                 echo $data['vernum'];
                                 echo "</td>";
-                                /*echo "<td><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
-                                echo "data-target=\"#editModal\">Aanpassen</button>";
-                                echo "</td><td><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button>";
-                                echo "</td><td><button type=\"button\" class=\"btn bg-dark text-white\" data-toggle=\"modal\"";
-                                echo "data-target=\"#myModal\" id=\" " . $data['vernum'] . " \">Bekijk</button></td>";*/
-                                echo "<td><a href='patienten.php?id='><button type=\"button\" class=\"btn bg-dark text-white \" data-toggle=\"modal\" data-target=\"#myModal\">Bekijk</button></a></td>";
+                                echo "<td><a href='inf.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
+                                echo "data-target=\"#editModal\">Aanpassen</button></a>";
+                                echo "</td><td><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></td>";
+                                echo "<td>";
+                                echo "<a href='inf.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
                                 echo "</tr>";
                             };
                         } catch (PDOException $e) {
@@ -120,240 +121,9 @@ include("dbconnection.php");
 
                         ?>
 
-
-
-
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="myModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <?php
-
-            try {
-                $query = $db->prepare("SELECT * FROM lijstpatienten WHERE vernum = ");
-                $query->execute();
-                $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-                foreach ($result as &$data) {
-                    $name = $data['naam'];
-                    $dob = $data['dob'];
-                    $vernum = $data['vernum'];
-                };
-            } catch (PDOException $e) {
-                die("Error:" . $e->getMessage());
-            };
-
-            ?>
-            <div class="modal-header">
-                <h4 class="modal-title font-weight-bold"><?php echo $name; ?></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-striped d-none d-xl-table">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                        <th><p>Verzekerings Nummer:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><p><?php echo $name; ?></p></td>
-                        <td><p><?php echo $dob; ?></p></td>
-                        <td><p><?php echo $vernum; ?></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <table class="table table-striped d-table d-xl-none">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><?php echo $name; ?></td>
-                        <td><?php echo $dob; ?></td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th><p>Verzekerings Nummer:</p></th>
-                        <th><p></p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><?php echo $vernum; ?></td>
-                        <td><p></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="editModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title text-warning font-weight-bold">Aanpassen</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-striped d-none d-xl-table">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                        <th><p>Verzekerings Nummer:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" value="Tom Baak"></td>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control" value="000100"></td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <!-- Kleine devices -->
-                <table class="table table-striped d-table d-xl-none">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" value="Tom Baak"></td>
-                        <td><input type="date" class="form-control"></td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th><p>Verzekerings Nummer:</p></th>
-                        <th><p></p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" value="000100"></td>
-                        <td><p></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning text-white" data-dismiss="modal">
-                    Wijzig
-                </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="newModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title text-success font-weight-bold">Nieuwe patient</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-striped d-none d-xl-table">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                        <th><p>Verzekerings Nummer:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Naam"></td>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control" placeholder="Verzekerings Nummer"></td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <!-- Kleine devices -->
-                <table class="table table-striped d-table d-xl-none">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Naam"></td>
-                        <td><input type="date" class="form-control"></td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th><p>Verzekerings Nummer:</p></th>
-                        <th><p></p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Verzekerings nummer"></td>
-                        <td><p></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success text-white" data-dismiss="modal">
-                    Toevoegen
-                </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Close
-                </button>
             </div>
         </div>
     </div>
