@@ -35,9 +35,6 @@
         };
 
 
-
-
-
         if($query->execute()){
             echo "Patient toegevoegd ";
             header("Location: patienten.php");
