@@ -73,10 +73,7 @@ include("dbconnection.php");
                         </div>
                     </div>
 
-                    <a><button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button"
-                            data-toggle="modal"
-                            data-target="#newModal">Nieuwe patient
-                    </button></a>
+                    <a href="inf.php?id=&type=new&master=pat"><button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button" >Nieuwe patient</button></a>
                     <table class="table table-striped" style="margin-top: 2rem">
                         <thead>
                         <tr>
