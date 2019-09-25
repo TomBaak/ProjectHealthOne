@@ -3,21 +3,22 @@
 
 <?php
 
-    include("dbconnection.php");
+include("dbconnection.php");
 
-    try {
-        $query = $db->prepare("SELECT * FROM lijstpatienten WHERE vernum=" . $_GET['id']);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+try {
+    $query = $db->prepare("SELECT * FROM patienten WHERE vernum=" . $_GET['id']);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($result as &$data) {
-            $name = $data['naam'];
-            $dob = date("m-d-Y", strtotime($data['dob']));
-            $vernum = $data['vernum'];
-        }
-    } catch (PDOException $e) {
-        die("Error: " . $e->getMessage());
-    };
+    foreach ($result as &$data) {
+        $name = $data['naam'];
+        $dobraw = $data['dob'];
+        $dob = date("d-m-Y", strtotime($data['dob']));
+        $vernum = $data['vernum'];
+    }
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+};
 
 ?>
 
@@ -59,17 +60,17 @@
             <li class="nav-item">
                 <?php
 
-                    switch ($_GET['master']) {
+                switch ($_GET['master']) {
 
-                        case 'pat':
-                            echo "<a class=\"nav-link\" href=\"patienten.php\">Terug naar patienten</a>";
-                            break;
+                    case 'pat':
+                        echo "<a class=\"nav-link\" href=\"patienten.php\">Terug naar patienten</a>";
+                        break;
 
-                        case 'rec':
-                            echo "<a class=\"nav-link\" href=\"recepten.php\">Terug naar recepten</a>";
-                            break;
+                    case 'rec':
+                        echo "<a class=\"nav-link\" href=\"recepten.php\">Terug naar recepten</a>";
+                        break;
 
-                    }
+                }
 
                 ?>
 
@@ -81,21 +82,21 @@
 <div class="container ">
     <?php
 
-        switch ($_GET['type']) {
+    switch ($_GET['type']) {
 
-            case 'inf':
-                echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Patient Info</h1>";
-                break;
+        case 'inf':
+            echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Patient Info</h1>";
+            break;
 
-            case 'edit':
-                echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Patient Wijzigen</h1>";
-                break;
+        case 'edit':
+            echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Patient Wijzigen</h1>";
+            break;
 
-            case 'new':
-                echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuwe Patient</h1>";
-                break;
+        case 'new':
+            echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuwe Patient</h1>";
+            break;
 
-        };
+    };
 
     ?>
 
@@ -109,55 +110,67 @@
                 <th>Naam:</th>
                 <td><?php
 
-                        switch ($_GET['type']) {
+                    switch ($_GET['type']) {
 
-                            case "inf":
-                                echo $name;
-                                break;
+                        case "inf":
+                            echo $name;
+                            break;
 
-                            case "edit":
-                                echo "<input class=\"form-control\" type=\"text\" value=\"$name\" name=\"name\">";
-                                break;
+                        case "edit":
+                            echo "<input class=\"form-control\" type=\"text\" value=\"$name\" name=\"name\">";
+                            break;
 
-                            case "new":
-                                echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
-                                break;
+                        case "new":
+                            echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
+                            break;
 
-                        }
+                    }
+
+                    echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
 
                     ?></td>
             </tr>
             <tr>
                 <th>Geboorte Datum:</th>
                 <td><?php
+                    $birthDate = $dob;
+                    $birthDate = explode("-", $birthDate);
+                    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                        ? ((date("Y") - $birthDate[2]) - 1)
+                        : (date("Y") - $birthDate[2]));
 
-                        switch ($_GET['type']) {
 
-                            case "inf":
-                                echo $dob;
-                                break;
+                    switch ($_GET['type']) {
 
-                            case "edit":
-                                echo "<input class=\"form-control\" type=\"date\" value=\"$dob\" name=\"dob\">";
-                                break;
+                        case "inf":
+                            echo $dob;
+                            echo " ($age)";
+                            break;
 
-                            case "new":
-                                echo "<input class=\"form-control\" type=\"date\" placeholder='Geboorte Datum' name=\"dob\">";
-                                break;
+                        case "edit":
+                            echo "<input class=\"form-control\" type=\"date\" value='$dobraw' name=\"dob\">";
+                            break;
 
-                        }
+                        case "new":
+                            echo "<input class=\"form-control\" type=\"date\" name=\"dob\">";
+
+                            break;
+
+                    }
 
                     ?></td>
             </tr>
             <?php
 
-                if ($_GET['type'] != "new") {
-                    echo "<tr>";
-                    echo "<th>Verzekerings nummer:</th>";
-                    echo "<td>";
-                    echo $vernum;
-                    echo "</td></tr>";
-                };
+            if ($_GET['type'] != "new") {
+                echo "<tr>";
+                echo "<th>Verzekerings nummer:</th>";
+                echo "<td>";
+                echo $vernum;
+                echo "</td></tr>";
+            };
+
+            echo "<input class=\"d-none\" type='number' name=\"vernum\" value='" . $_GET['id'] . "'>";
 
             ?>
 
@@ -167,17 +180,17 @@
 
     <?php
 
-        switch ($_GET['type']) {
+    switch ($_GET['type']) {
 
-            case "edit":
-                echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $name\">";
-                break;
+        case "edit":
+            echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $name\">";
+            break;
 
-            case "new":
-                echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
-                break;
+        case "new":
+            echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
+            break;
 
-        }
+    }
 
     ?>
 
@@ -186,7 +199,6 @@
 
 
 </div>
-
 
 </body>
 </html>

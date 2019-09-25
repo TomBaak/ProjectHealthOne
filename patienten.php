@@ -66,11 +66,8 @@ include("dbconnection.php");
                     <div class="jumbotron jumbotron-fluid text-center">
                         <h1>Patienten</h1>
                     </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Zoek naar patient">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">Zoek</button>
-                        </div>
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input class="form-control my-0 py-1" type="text" placeholder="Zoeken">
                     </div>
 
                     <a href="inf.php?id=&type=new&master=pat"><button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button" >Nieuwe patient</button></a>
@@ -90,7 +87,7 @@ include("dbconnection.php");
 
 
                         try {
-                            $query = $db->prepare("SELECT * FROM lijstpatienten");
+                            $query = $db->prepare("SELECT * FROM patienten");
                             $query->execute();
                             $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -100,14 +97,14 @@ include("dbconnection.php");
                                 echo $data['naam'];
                                 echo "</td>";
                                 echo "<td>";
-                                echo date("m-d-Y", strtotime($data['dob']));
+                                echo date("d-m-Y", strtotime($data['dob']));
                                 echo "</td>";
                                 echo "<td>";
                                 echo $data['vernum'];
                                 echo "</td>";
                                 echo "<td><a href='inf.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
                                 echo "data-target=\"#editModal\">Aanpassen</button></a>";
-                                echo "</td><td><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></td>";
+                                echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                                 echo "<td>";
                                 echo "<a href='inf.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
                                 echo "</tr>";
