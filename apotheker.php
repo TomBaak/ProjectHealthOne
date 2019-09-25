@@ -19,6 +19,11 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/theme_HO.css">
 </head>
+<?php
+    include("databaseconnect.php");
+?>
+
+
 
 <div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
     <div class="container">
@@ -66,54 +71,127 @@
         <tr>
             <th>Voornaam</th>
             <th>Achternaam</th>
+            <th>Geboortedatum</th>
             <th>Patiëntnummer</th>
             <th>Recepten</th>
+            <th>Opgehaald of Niet Opgehaald</th>
         </tr>
         </thead>
         <body>
         <tr>
             <td>Tom</td>
             <td>Baak</td>
+            <td>-</td>
             <td>037926</td>
             <td>
-                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
-                
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    Bekijken
+                </button>
+            </td>
+            <td>
+                <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Opgehaald</a>
+                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Niet Opgehaald</a>
             </td>
         </tr>
         <tr>
             <td>Rowan</td>
             <td>Amatkario</td>
+            <td>-</td>
             <td>194346</td>
             <td>
-                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    Bekijken
+                </button>
+            </td>
+            <td>
+                <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Opgehaald</a>
+                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Niet Opgehaald</a>
             </td>
         </tr>
         <tr>
             <td>Sebas</td>
             <td>Dooley</td>
+            <td>-</td>
             <td>894356</td>
             <td>
-                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    Bekijken
+                </button>
+            </td>
+            <td>
+                <a href="#" class="btn btn-success disabled" role="button" aria-pressed="true">Opgehaald</a>
+                <a href="#" class="btn btn-danger active" role="button" aria-disabled="true">Niet Opgehaald</a>
             </td>
         </tr>
         <tr>
-            <td>Vito</td>
+            <td >Vito</td>
             <td>Kloots</td>
+            <td>-</td>
             <td>672359</td>
             <td>
-                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    Bekijken
+                </button>
+            </td>
+            <td>
+                <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Opgehaald</a>
+                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Niet Opgehaald</a>
             </td>
         </tr>
         <tr>
-            <td>Jeffrey</td>
-            <td>Vink</td>
+            <td>Kiran</td>
+            <td>Karia</td>
+            <td>-</td>
             <td>413869</td>
             <td>
-                <a href="recepten.php" class="btn btn-danger">Bekijken</a>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    Bekijken
+                </button>
+            </td>
+            <td>
+                <a href="#" class="btn btn-success disabled" role="button" aria-pressed="true">Opgehaald</a>
+                <a href="#" class="btn btn-danger active" role="button" aria-disabled="true">Niet Opgehaald</a>
             </td>
         </tr>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Huidige recepten van Patient</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Test
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Afsluiten</button>
+                        <button type="button" class="btn btn-primary">Opslaan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </body>
     </table>
+    <?php
+    try {
+        $query = $db->prepare("SELECT * FROM patienten");
+
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $data) {
+            echo $data["Voornaam"] . " ";
+            echo $data["Achternaam"] . " ";
+            echo $data["Geboortedatum"] . " ";
+        }
+    } catch (Exception $e) {
+        echo"probleem";
+        die ("Error!: " . $e->getMessage());
+    }
+    ?>
+
 
 </div>
 
