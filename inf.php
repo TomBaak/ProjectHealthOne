@@ -133,18 +133,12 @@ try {
             <tr>
                 <th>Geboorte Datum:</th>
                 <td><?php
-                    $birthDate = $dob;
-                    $birthDate = explode("-", $birthDate);
-                    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-                        ? ((date("Y") - $birthDate[2]) - 1)
-                        : (date("Y") - $birthDate[2]));
 
 
                     switch ($_GET['type']) {
 
                         case "inf":
                             echo $dob;
-                            echo " ($age)";
                             break;
 
                         case "edit":

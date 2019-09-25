@@ -22,7 +22,6 @@
                     $query = $db->prepare("UPDATE `patienten` SET `naam`=:naam,`dob`=:dob WHERE vernum='" . $_POST['vernum'] . "'");
                     $query->bindParam("dob", $dob);
                     $query->bindParam("naam", $name);
-
                 break;
 
             default:
