@@ -1,3 +1,4 @@
 <?php
-    $db = new \PDO("mysql:host=localhost;dbname=healthone", "root", "");
-    ?>
+$db = new \PDO("mysql:host=localhost;dbname=healthone", "root", "");
+
+?>

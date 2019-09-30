@@ -66,101 +66,13 @@
     <div class="active-pink-3 active-pink-4 mb-4">
         <input class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Voornaam</th>
-            <th>Achternaam</th>
-            <th>Geboortedatum</th>
-            <th>Patiëntnummer</th>
-            <th>Recepten</th>
-            <th>Opgehaald of Niet Opgehaald</th>
-        </tr>
-        </thead>
-        <body>
-        <tr>
-            <td>Tom</td>
-            <td>Baak</td>
-            <td>-</td>
-            <td>037926</td>
-            <td>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                    Bekijken
-                </button>
-            </td>
-            <td>
-                <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Opgehaald</a>
-                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Niet Opgehaald</a>
-            </td>
-        </tr>
-        <tr>
-            <td>Rowan</td>
-            <td>Amatkario</td>
-            <td>-</td>
-            <td>194346</td>
-            <td>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                    Bekijken
-                </button>
-            </td>
-            <td>
-                <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Opgehaald</a>
-                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Niet Opgehaald</a>
-            </td>
-        </tr>
-        <tr>
-            <td>Sebas</td>
-            <td>Dooley</td>
-            <td>-</td>
-            <td>894356</td>
-            <td>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                    Bekijken
-                </button>
-            </td>
-            <td>
-                <a href="#" class="btn btn-success disabled" role="button" aria-pressed="true">Opgehaald</a>
-                <a href="#" class="btn btn-danger active" role="button" aria-disabled="true">Niet Opgehaald</a>
-            </td>
-        </tr>
-        <tr>
-            <td >Vito</td>
-            <td>Kloots</td>
-            <td>-</td>
-            <td>672359</td>
-            <td>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                    Bekijken
-                </button>
-            </td>
-            <td>
-                <a href="#" class="btn btn-success active" role="button" aria-pressed="true">Opgehaald</a>
-                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Niet Opgehaald</a>
-            </td>
-        </tr>
-        <tr>
-            <td>Kiran</td>
-            <td>Karia</td>
-            <td>-</td>
-            <td>413869</td>
-            <td>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                    Bekijken
-                </button>
-            </td>
-            <td>
-                <a href="#" class="btn btn-success disabled" role="button" aria-pressed="true">Opgehaald</a>
-                <a href="#" class="btn btn-danger active" role="button" aria-disabled="true">Niet Opgehaald</a>
-            </td>
-        </tr>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Huidige recepten van Patient</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">x</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -173,18 +85,41 @@
                 </div>
             </div>
         </div>
-        </body>
     </table>
+
     <?php
     try {
         $query = $db->prepare("SELECT * FROM patienten");
 
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        echo "<table class=\"table table-striped\">";
+        echo "<thead>";
+        echo "<tr>";
+            echo "<th>" . "Voornaam" . "</th>";
+             echo "<th>" . "Tussenvoegsel" . "</th>";
+            echo "<th>" . "Achternaam" . "</th>";
+            echo "<th>" . "Geboortedatum" . "</th>";
+            echo "<th>" . "Patientnummer" . "</th>";
+            echo "<th>" . "Recepten" . "</th>";
+            echo "<th>" . "Opgehaald of Niet opgehaald" . "</th>";
+            echo "</tr>";
+            echo "</thead>";
+
         foreach ($result as $data) {
-            echo $data["Voornaam"] . " ";
-            echo $data["Achternaam"] . " ";
-            echo $data["Geboortedatum"] . " ";
+            echo "<tr>";
+            echo "<td>" . $data["Voornaam"] . "</td>";
+            echo "<td>" . $data["Tussenvoegsel"] . "</td>";
+            echo "<td>" . $data["Achternaam"] . "</td>";
+            echo "<td>" . $data["Geboortedatum"] . "</td>";
+            echo "<td>" . $data["Patientnummer"] . "</td>";
+            echo "<td>" . "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" 
+                            data-target=\"#exampleModal\"> Bekijken </button>" . "</td>";
+            echo "<td>" .  "<a href=\"#\" class=\"btn btn-success disabled\" role=\"button\" aria-pressed=\"true\">Opgehaald</a>"
+                . " " . "<a href=\"#\" class=\"btn btn-danger active\" role=\"button\" aria-disabled=\"true\">Niet Opgehaald</a>"
+                . "</td>";
+            echo "</tr>";
         }
     } catch (Exception $e) {
         echo"probleem";
@@ -192,10 +127,9 @@
     }
     ?>
 
-
 </div>
-
 
 </body>
 
 </html>
+
