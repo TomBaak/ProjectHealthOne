@@ -35,6 +35,9 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="apotheeker.php">Apotheeker</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="recepten.php">Recepten</a>
                     </li>
                     <li class="nav-item">
@@ -45,12 +48,53 @@
                     </li>
                 </ul>
             </div>
-            <div class="search-container">
+        </nav>
+        <main>
+            <div class="jumbotron jumbotron-fluid">
+                <h1 style="padding-left: 1rem">Apotheek</h1>
+            </div>
+            <div class="search-container text-center">
                 <form action="/action_page.php">
-                    <input type="text" placeholder="Zoek patiënt..." name="zoeken">
-                    <button type="submit"><u class="fa fa-search">Zoek</u></button>
+                    <input type="text" placeholder="Zoek patiënt..." name="zoeken" style="width: 70%">
+                    <button class="bg-danger" type="submit"><b class="fa fa-search">Zoek</b></button>
                 </form>
             </div>
-        </nav>
+            <table class="table table-striped table-danger text-center" style="width: 80%;margin-left: 10%">
+                <thead>
+                    <tr>
+                        <th>ID nummer</th>
+                        <th>Voornaam</th>
+                        <th>Achternaam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>6184950900</th>
+                        <th>Gregory</th>
+                        <th>Jefferson</th>
+                    </tr>
+                    <tr>
+                        <th>5796425023</th>
+                        <th>Paula</th>
+                        <th>Smits</th>
+                    </tr>
+                    <tr>
+                        <th>57946132485</th>
+                        <th>Frank</th>
+                        <th>Stam</th>
+                    </tr>
+                    <tr>
+                        <th>2467915843</th>
+                        <th>Sandy</th>
+                        <th>Orlands</th>
+                    </tr>
+                    <tr>
+                        <th>14372491657</th>
+                        <th>Jesper</th>
+                        <th>Broeckaert</th>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
     </body>
 </html>

@@ -36,6 +36,9 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="apotheeker.php">Apotheeker</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="recepten.php">Recepten</a>
                     </li>
                     <li class="nav-item">
@@ -46,13 +49,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="search-container">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Zoek patiënt..." name="zoeken">
-                    <button type="submit"><u class="fa fa-search">Zoek</u></button>
-                </form>
-            </div>
-        </nav>
+            </nav>
         <div class="container" style="margin-top: 2.5rem">
             <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
                 <h1>Kies gebruiker</h1>
