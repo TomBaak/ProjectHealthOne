@@ -62,8 +62,8 @@
             <table class="table table-striped table-danger table-bordered" style="width: 80%;margin-left: 10%">
                 <thead>
                     <tr>
-                        <td>Nummer</td>
-                        <td>Mijdicijn</td>
+                        <td>Nr.</td>
+                        <td>Medicijn</td>
                         <td>Omschrijving</td>
                         <td>Bijwerkingen</td>
                     </tr>
@@ -135,7 +135,8 @@
                                 <li>
                                     <b>Let op:</b> kans op maag- en darmzweren en bloedingen.<br>
                                     Bent u ouder dan 70 jaar, heeft u eerder een maag- of darmzweer gehad of gebruikt u
-                                    anti-bloedstollingsmedicijnen. Informeer uw arts of apotheker.
+                                    anti-bloedstollingsmedicijnen? Dan heeft u een maagbeschermer nodig. Vraag hiernaar
+                                    bij uw arts of apotheker.
                                 </li>
                                 <li>
                                     Diclofenac kan schadelijk zijn tijdens de zwangerschap. Overleg het gebruik met de arts.
@@ -143,7 +144,131 @@
                                 </li>
                                 <li>
                                     Heeft wisselwerkingen in combinatie met andere medicijnen. Vraag uw apoteker of u
-                                    Diclofenac veilig kan gebruiken met uw andere medicatie.
+                                    diclofenac veilig kan gebruiken met uw andere medicatie.
+                                </li>
+                                <li>
+                                    Alcohol vergroot de kansen op maagklachten.
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Ibuprofen</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <b>Gebruiken bij:</b> verschillende soorten pijn en ontstekingen, zoals bij gewrichtspijn
+                                    (jicht, reumatoïde artritis, ziekte van Bechterew, artrose), hoofdpijn, migraine,
+                                    menstruatieklachten en spierpijn. OOk bij griep en verkoudheid.
+                                </li>
+                                <li>
+                                    Stilt pijn, remt ontstekingen en verlaagt koorts.
+                                </li>
+                                <li>
+                                    Gewone tabletten, capsules, drank en korrels werken an 30 tot 60 minuten. De werking
+                                    houdt 8 uur aan. Vertraagde-afgiftetabletten en zetpillen werken na 2-3 uur. De werking
+                                    is ongeveer 12 uur lang.
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <b>Let op:</b> kans op maag- en darmzweren en bloedingen.<br>
+                                    Bent u ouder dan 70 jaar, heeft u eerder een maag- of darmzweer gehad of gebruikt u
+                                    anti-bloedstollingsmedicijnen? Dan heeft u een maagbeschermer nodig. Vraag hiernaar
+                                    bij uw arts of apotheker.
+                                </li>
+                                <li>
+                                    Ibuprofen kan schadelijk zijn tijdens de zwangerschap. Overleg het gebruik met de arts.
+                                    Gebruik het <b>niet</b> tijdens de tweede helft van de zwangerschap.
+                                </li>
+                                <li>
+                                    Veel wisselwerkingen met andere medicijnen. Vraag uw apotheker of u ibuprofen veilig
+                                    kunt gebruiken met uw andere medicijnen.
+                                </li>
+                                <li>
+                                    Dan heeft u een maagbeschermer nodig. Vraag hiernaar bij uw arts of apotheker.
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Amoxicilline<br>(antibioticum)</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <b>Gebruiken bij:</b> infecties van longen, luchtpijp, keel, bijholtes, middenoor,
+                                    blaas, maag en darmen, en huid. Bij geslachtsziekten (chlamydia, gonorroe), de
+                                    ziekte van Lyme en hersenvliesontsteking.
+                                </li>
+                                <li>
+                                    Dood bacteriën. Werkt binnen enkele dagen.
+                                </li>
+                                <li>
+                                    Capsules en tabletten: neem in met water. Verdeel de innames gelijkmatig over de dag.
+                                    Dan werkt amoxicilline het best.
+                                </li>
+                                <li>
+                                    Drank: goed omschudden voor gebruik. Meet de hoeveelheid af met een maatbeker of maatlepel.
+                                </li>
+                                <li>
+                                    Een kuur duurt meestal 5 tot 10 dagen, soms langer. Maak de hele kuur af. Ook als de
+                                    infectie genezen lijkt, want misschien zijn er nog bacteriën over.
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    U kunt diarree of buikkramp krijgen. Dit is normaal en gaat vanzelf over. Heeft u
+                                    meerdere malen per dag diarree met buikkrampen? Waarschuw dan een arts. Drink
+                                    voldoende vocht als u diarree heeft, anders raakt u uitgedroogd.
+                                </li>
+                                <li>
+                                    Huiduitslag komt voor. Een enkele keer komt dit door overgevoeligheid. Ook kunt u
+                                    dan benauwd worden, koorts krijgen of flauwvallen. Als u overgevoelig bent, mag u
+                                    dit medicijn niet meer gebruiken. Geef dat door aan uw apotheker.
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Naproxen</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <b>Gebruiken bij:</b> gewrichtspijn, reumatoïde artritis, ziekte van Bechterew,
+                                    jicht, hoofdpijn, menstruatieklachten, artrose (versleten gewrichten), spierpijn en
+                                    griep of verkoudheid.
+                                </li>
+                                <li>
+                                    Stilt pijn, vermindert ontstekingen en verlaagt koorts.
+                                </li>
+                                <li>
+                                    Tabletten werken 1 uur en zetpillen binnen anderhalf uur. De werking houdt ongeveer
+                                    7 tot 12 uur aan. Met ontsteking verdwijnen roodheid en zwellingen binnen een week.
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <b>Let op:</b> kans op maag- en darmzweren en bloedingen.<br>
+                                    Bent u ouder dan 70 jaar, heeft u eerder een maag- of darmzweer gehad of gebruikt u
+                                    anti-bloedstollingsmedicijnen? Dan heeft u een maagbeschermer nodig. Vraag hiernaar
+                                    bij uw arts of apotheker.
+                                </li>
+                                <li>
+                                    Naproxen kan schadelijk zijn tijdens de zwangerschap. Overleg het gebruik met de arts.
+                                    Gebruik het <b>niet</b> tijdens de tweede helft van de zwangerschap.
+                                </li>
+                                <li>
+                                    Veel wisselwerkingen met andere medicijnen. Vraag uw apotheker of u naproxen veilig
+                                    kunt gebruiken met uw andere medicijnen.
                                 </li>
                                 <li>
                                     Alcohol vergroot de kansen op maagklachten.
