@@ -18,6 +18,8 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/theme_HO.css">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
 </head>
 <?php
     include("databaseconnect.php");
@@ -27,13 +29,13 @@
 
 <div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
     <div class="container">
-        <img src="img/logo.png" style="width: 8%">
-        <p>Zilverenkruis </p>
+        <img src="img/logo.png" style="width: 8%"style="width: 8%;">
+        <h2 style=" font-family:Sans-serif;">Zilverenkruis</h2>
     </div>
 </div>
 
 <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-    <a class="navbar-brand" href="#">Navigatie</a>
+    <a class="navbar-brand" href="#">HealthOne</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -48,19 +50,34 @@
             <li class="nav-item">
                 <a class="nav-link" href="patienten.php">Patienten</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Specialisatie
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Verzekeraar</a>
+                    <a class="dropdown-item" href="#">Apotheker</a>
+                    <a class="dropdown-item" href="#">Arts</a>
+                </div>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="contact.php">Contact</a>
             </li>
+            <div class="login-container" style="position: absolute; right: 0; margin-right: 10px;">
+            <div class="text-center">
+                <a href="#myModal" class="trigger-btn" data-toggle="modal" style="color: white;">Inloggen</a>
+                <img src="img/avatar.png" style="width: 15%;">
+            </div>
+            </div>
+
         </ul>
     </div>
 </nav>
-
 <div class="container" style="margin-top: 2.5rem">
     <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
         <h1>Apotheek</h1>
         <p></p>
     </div>
-
     <h2>Patiënten</h2>
     <p></p>
     <div class="active-pink-3 active-pink-4 mb-4">
@@ -87,7 +104,34 @@
         </div>
     </table>
 
-    <?php
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align: center;">Inloggen</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="/examples/actions/confirmation.php" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Gebruikersnaam" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Wachtwoord" required="required">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#">Wachtwoord vergeten</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
     try {
         $query = $db->prepare("SELECT * FROM patienten");
 
@@ -116,8 +160,8 @@
             echo "<td>" . $data["Patientnummer"] . "</td>";
             echo "<td>" . "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" 
                             data-target=\"#exampleModal\"> Bekijken </button>" . "</td>";
-            echo "<td>" .  "<a href=\"#\" class=\"btn btn-success disabled\" role=\"button\" aria-pressed=\"true\">Opgehaald</a>"
-                . " " . "<a href=\"#\" class=\"btn btn-danger active\" role=\"button\" aria-disabled=\"true\">Niet Opgehaald</a>"
+            echo "<td>" .  "<input type=\"checkbox\" checked data-toggle=\"toggle\" data-on=\"Opgehaald\" data-off=\"Niet Opgehaald\" 
+                            data-onstyle=\"success\" data-offstyle=\"danger\" data-width=\"200\" data-height=\"40\">"
                 . "</td>";
             echo "</tr>";
         }
@@ -127,9 +171,12 @@
     }
     ?>
 
+
 </div>
 
 </body>
 
 </html>
+
+
 
