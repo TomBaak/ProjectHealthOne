@@ -23,7 +23,7 @@
 
 <?php
 
-include("dbconnection.php");
+    include("dbconnection.php");
 
 ?>
 
@@ -68,9 +68,12 @@ include("dbconnection.php");
                 <div class="jumbotron jumbotron-fluid text-center">
                     <h1>Patienten</h1>
                 </div>
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1" type="text" placeholder="Zoeken">
-                </div>
+                <form method="get" action="patienten.php">
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input class="form-control my-0 py-1" type="text" name="search" placeholder="Zoeken">
+                        <button type="submit" class="btn btn-success">Zoek</button>
+                    </div>
+                </form>
 
                 <a href="inf.php?id=&type=new&master=pat">
                     <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuwe
@@ -81,9 +84,10 @@ include("dbconnection.php");
                 <table class="table table-striped" style="margin-top: 2rem; margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th style="min-width: 30%"><p>Naam:</p></th>
+                        <th style="min-width: 20%"><p>Naam:</p></th>
                         <th><p>Geboorte datum:</p></th>
                         <th><p>Verzekerings Nummer:</p></th>
+                        <th><p>Verzekerd:</p></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -93,32 +97,50 @@ include("dbconnection.php");
                     <?php
 
 
-                    try {
-                        $query = $db->prepare("SELECT * FROM patienten");
-                        $query->execute();
-                        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                        try {
 
-                        foreach ($result as &$data) {
-                            echo "<tr>";
-                            echo "<td>";
-                            echo $data['naam'];
-                            echo "</td>";
-                            echo "<td>";
-                            echo date("d-m-Y", strtotime($data['dob']));
-                            echo "</td>";
-                            echo "<td>";
-                            echo $data['vernum'];
-                            echo "</td>";
-                            echo "<td><a href='inf.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
-                            echo "data-target=\"#editModal\">Aanpassen</button></a>";
-                            echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
-                            echo "<td>";
-                            echo "<a href='inf.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
-                            echo "</tr>";
+                            if(isset($_GET['search']) && $_GET['search'] != NULL){
+                                $searchCondition = "vernum LIKE '%" . $_GET['search'] . "%' OR naam LIKE '%" . $_GET['search'] . "%' OR dob='" . date("Y-m-d", strtotime($_GET['search'])) . "'";
+                                $query = $db->prepare("SELECT * FROM patienten WHERE " . $searchCondition);
+                            }else{
+                                $query = $db->prepare("SELECT * FROM patienten");
+                            }
+                            if($query->execute()) {
+                                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                foreach ($result as &$data) {
+                                    echo "<tr>";
+                                    echo "<td>";
+                                    echo $data['naam'];
+                                    echo "</td>";
+                                    echo "<td>";
+                                    echo date("d-m-Y", strtotime($data['dob']));
+                                    echo "</td>";
+                                    echo "<td>";
+                                    echo $data['vernum'];
+                                    echo "</td>";
+                                    if($data['verzekerd'] == 0){
+                                        echo "<td>";
+                                        echo "<p class=\"text-danger font-weight-bold\">Niet verzekerd</p>";
+                                        echo "</td>";
+                                    }else{
+                                        echo "<td>";
+                                        echo "<p class=\"text-success font-weight-bold\">Verzekerd</p>";
+                                        echo "</td>";
+                                    }
+                                    echo "<td><a href='inf.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
+                                    echo "data-target=\"#editModal\">Aanpassen</button></a>";
+                                    echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                    echo "<td>";
+                                    echo "<a href='inf.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                                    echo "</tr>";
+                                };
+                            }else{
+                                echo "<h1 class='text-danger'>Er is een fout opgetreden</h1>";
+                            }
+                        } catch (PDOException $e) {
+                            die("Error:" . $e->getMessage());
                         };
-                    } catch (PDOException $e) {
-                        die("Error:" . $e->getMessage());
-                    };
 
                     ?>
                     </tbody>

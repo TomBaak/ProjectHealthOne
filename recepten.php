@@ -68,9 +68,12 @@ include("dbconnection.php");
                 <div class="jumbotron jumbotron-fluid text-center">
                     <h1>Recepten</h1>
                 </div>
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1" type="text" placeholder="Zoeken">
-                </div>
+                <form class="d-none"method="get" action="patienten.php">
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input class="form-control my-0 py-1" type="text" name="search" placeholder="Zoeken">
+                        <button type="submit" class="btn btn-success">Zoek</button>
+                    </div>
+                </form>
 
                 <a href="inf.php?id=&type=new&master=rec">
                     <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuw recept
@@ -83,6 +86,7 @@ include("dbconnection.php");
                         <th style="min-width: 30%"><p>Naam patient:</p></th>
                         <th><p>Medicijn:</p></th>
                         <th><p>Datum uitgeschreven:</p></th>
+                        <th><p>Opgehaald:</p></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -117,6 +121,16 @@ include("dbconnection.php");
                             echo "<td>";
                             echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
                             echo "</td>";
+                            if($data['opgehaald'] == 0){
+                                echo "<td>";
+                                echo "<p class=\"text-danger font-weight-bold\">Niet opgehaald</p>";
+                                echo "</td>";
+                            }else{
+                                echo "<td>";
+                                echo "<p class=\"text-success font-weight-bold\">Opgehaald</p>";
+                                echo "</td>";
+                            }
+
                             echo "<td><a href='inf.php?id=" . "#" . "&type=edit&master=rec'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
                             echo "data-target=\"#editModal\">Aanpassen</button></a>";
                             echo "</td><td><a href='dbedit.php?vernum=" . "#" . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
@@ -129,6 +143,7 @@ include("dbconnection.php");
                     };
 
                     ?>
+
                     </tbody>
                 </table>
             </div>
