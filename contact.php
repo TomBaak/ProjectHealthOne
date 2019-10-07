@@ -36,14 +36,62 @@
             <li class="nav-item">
                 <a class="nav-link" href="index.php">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="recepten.php">Recepten</a>
+            <?php
+
+            session_start();
+
+            if (isset($_SESSION['user'])) {
+                switch ($_SESSION['user']) {
+
+                    case "verz":
+
+                        echo "<li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a>
+            </li>";
+
+                    case "app":
+
+                    case "arts":
+
+                        echo "
+                        <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="patienten.php">Patienten</a>
+            <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"patienten.php\">Patienten</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="contact.php">Contact</a>
+            <li class=\"nav-item\">
+                <a class=\"nav-link active\" href=\"contact.php\">Contact</a>
+            </li>
+                        ";
+
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+
+            ?>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item text-white">
+                Ingelogd als:
+            <?php
+
+            if(isset($_SESSION['user'])){
+                switch ($_SESSION['user']){
+
+                    case "app": echo "Apotheker"; break;
+                    case "verz": echo "Verzekeraar"; break;
+                    case "arts": echo "Arts"; break;
+                    default: break;
+
+                }
+            }
+
+            ?>
             </li>
         </ul>
     </div>

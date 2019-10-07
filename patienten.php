@@ -46,14 +46,62 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="recepten.php">Recepten</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="patienten.php">Patienten</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.php">Contact</a>
+                <?php
+
+                session_start();
+
+                if (isset($_SESSION['user'])) {
+                    switch ($_SESSION['user']) {
+
+                        case "verz":
+
+                            echo "<li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a>
+            </li>";
+
+                        case "app":
+
+                        case "arts":
+
+                            echo "
+                        <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
+            </li>
+            <li class=\"nav-item\">
+                <a class=\"nav-link active\" href=\"patienten.php\">Patienten</a>
+            </li>
+            <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"contact.php\">Contact</a>
+            </li>
+                        ";
+
+                            break;
+
+                        default:
+                            break;
+
+                    }
+                }
+
+                ?>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item text-white">
+                    Ingelogd als:
+                    <?php
+
+                    if(isset($_SESSION['user'])){
+                        switch ($_SESSION['user']){
+
+                            case "app": echo "Apotheker"; break;
+                            case "verz": echo "Verzekeraar"; break;
+                            case "arts": echo "Arts"; break;
+                            default: break;
+
+                        }
+                    }
+
+                    ?>
                 </li>
             </ul>
         </div>
@@ -77,7 +125,7 @@
                     </div>
                 </form>
 
-                <a href="inf.php?id=&type=new&master=pat">
+                <a href="infpat.php?id=&type=new&master=pat">
                     <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuwe
                         patient
                     </button>
@@ -95,15 +143,17 @@
                         <th></th>
                     </tr>
                     </thead>
+                    </thead>
                     <tbody>
                     <?php
                         try {
-
                             if(isset($_GET['search']) && $_GET['search'] != NULL){
                                 $searchCondition = "vernum LIKE '%" . $_GET['search'] . "%' OR naam LIKE '%" . $_GET['search'] . "%' OR dob='" . date("Y-m-d", strtotime($_GET['search'])) . "'";
                                 $query = $db->prepare("SELECT * FROM patienten WHERE " . $searchCondition);
-                            }else{
+                            }elseif($_SESSION['user'] != "app"){
                                 $query = $db->prepare("SELECT * FROM patienten");
+                            }else{
+                                $query = $db->prepare("SELECT * FROM patienten WHERE 1 = 0");
                             }
                             if($query->execute()) {
                                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -128,11 +178,10 @@
                                         echo "<p class=\"text-success font-weight-bold\">Verzekerd</p>";
                                         echo "</td>";
                                     }
-                                    echo "<td><a href='inf.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
-                                    echo "data-target=\"#editModal\">Aanpassen</button></a>";
-                                    echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                    echo "<td><a href='infpat.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \">Wijzig</button></a>";
+                                    echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del&master=pat'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                                     echo "<td>";
-                                    echo "<a href='inf.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                                    echo "<a href='infpat.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
                                     echo "</tr>";
                                 };
                             }else{
