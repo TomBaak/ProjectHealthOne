@@ -20,296 +20,131 @@
     <link rel="stylesheet" href="styles/overwrite.css">
     <link rel="stylesheet" href="styles/theme_HO.css">
 </head>
+
+<?php
+
+    include("dbconnection.php");
+
+?>
+
 <body>
-<div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
-    <div class="container">
-        <img src="img/logo.png" style="width: 8%">
-        <p>Zilverenkruis </p>
+<div class="position-fixed w-100" style="z-index: 5">
+    <div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem;">
+        <div class="container">
+            <img src="img/logo.png" style="width: 8%">
+            <p>Zilverenkruis </p>
+        </div>
     </div>
+
+    <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
+        <a class="navbar-brand" href="#">Navigatie</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="recepten.php">Recepten</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="patienten.php">Patienten</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.php">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 
-<nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-    <a class="navbar-brand" href="#">Navigatie</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="recepten.php">Recepten</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="patienten.php">Patienten</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
-<div class="row bg-transparent" style="margin: 0;margin-top: 1%">
-    <div class="col">
-        <div class="container" style="margin-bottom: 2%">
-            <div class="row">
-                <div class="col">
-                    <div class="jumbotron jumbotron-fluid text-center">
-                        <h1>Patienten</h1>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Zoek naar patient">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">Zoek</button>
-                        </div>
-                    </div>
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button" data-toggle="modal"
-                            data-target="#newModal">Nieuwe patient</button>
-                    <table class="table table-striped" style="margin-top: 2rem">
-                        <thead>
-                        <tr>
-                            <th style="min-width: 30%"><p>Naam:</p></th>
-                            <th><p>Geboorte datum:</p></th>
-                            <th><p>Verzekerings Nummer:</p></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody id="myTable">
-                        <tr>
-                            <td><p>T. Baak</p></td>
-                            <td><p>20/03/2002</p></td>
-                            <td><p>000100</p></td>
-                            <td>
-                                <button type="button" class="btn bg-warning text-white " data-toggle="modal"
-                                        data-target="#editModal">Aanpassen</button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn bg-danger text-white" >Verwijder</button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn bg-dark text-white" data-toggle="modal"
-                                        data-target="#myModal">Bekijk
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+<div class="container bg-transparent position-absolute" style="top: 27%; max-width: 100%;">
+    <div class="container position-relative w-75" style="margin-bottom: 2%">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid text-center">
+                    <h1>Patienten</h1>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <form method="get" action="patienten.php">
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input class="form-control my-0 py-1" type="text" name="search" placeholder="Zoeken">
+                        <button type="submit" class="btn btn-success">Zoek</button>
+                    </div>
+                </form>
 
-<div class="modal" id="myModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+                <a href="inf.php?id=&type=new&master=pat">
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuwe
+                        patient
+                    </button>
+                </a>
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Tom Baak</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-striped d-none d-xl-table">
+                <table class="table table-striped" style="margin-top: 2rem; margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th><p>Naam:</p></th>
+                        <th style="min-width: 20%"><p>Naam:</p></th>
                         <th><p>Geboorte datum:</p></th>
                         <th><p>Verzekerings Nummer:</p></th>
+                        <th><p>Verzekerd:</p></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><p>Tom Baak</p></td>
-                        <td><p>20/03/2002</p></td>
-                        <td><p>000100</p></td>
-                    </tr>
+                    <?php
+
+
+                        try {
+
+                            if(isset($_GET['search']) && $_GET['search'] != NULL){
+                                $searchCondition = "vernum LIKE '%" . $_GET['search'] . "%' OR naam LIKE '%" . $_GET['search'] . "%' OR dob='" . date("Y-m-d", strtotime($_GET['search'])) . "'";
+                                $query = $db->prepare("SELECT * FROM patienten WHERE " . $searchCondition);
+                            }else{
+                                $query = $db->prepare("SELECT * FROM patienten");
+                            }
+                            if($query->execute()) {
+                                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                foreach ($result as &$data) {
+                                    echo "<tr>";
+                                    echo "<td>";
+                                    echo $data['naam'];
+                                    echo "</td>";
+                                    echo "<td>";
+                                    echo date("d-m-Y", strtotime($data['dob']));
+                                    echo "</td>";
+                                    echo "<td>";
+                                    echo $data['vernum'];
+                                    echo "</td>";
+                                    if($data['verzekerd'] == 0){
+                                        echo "<td>";
+                                        echo "<p class=\"text-danger font-weight-bold\">Niet verzekerd</p>";
+                                        echo "</td>";
+                                    }else{
+                                        echo "<td>";
+                                        echo "<p class=\"text-success font-weight-bold\">Verzekerd</p>";
+                                        echo "</td>";
+                                    }
+                                    echo "<td><a href='inf.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \" data-toggle=\"modal\"";
+                                    echo "data-target=\"#editModal\">Aanpassen</button></a>";
+                                    echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                    echo "<td>";
+                                    echo "<a href='inf.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                                    echo "</tr>";
+                                };
+                            }else{
+                                echo "<h1 class='text-danger'>Er is een fout opgetreden</h1>";
+                            }
+                        } catch (PDOException $e) {
+                            die("Error:" . $e->getMessage());
+                        };
+
+                    ?>
                     </tbody>
                 </table>
-                <table class="table table-striped d-table d-xl-none">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Medicijn:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><p>Tom Baak</p></td>
-                        <td><p>Paracetemol</p></td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th><p>Verzekerings Nummer:</p></th>
-                        <th><p></p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><p>000100</p></td>
-                        <td><p></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="editModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title text-warning font-weight-bold">Aanpassen</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-striped d-none d-xl-table">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                        <th><p>Verzekerings Nummer:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" value="Tom Baak"></td>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control" value="000100"></td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <!-- Kleine devices -->
-                <table class="table table-striped d-table d-xl-none">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" value="Tom Baak"></td>
-                        <td><input type="date" class="form-control"></td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th><p>Verzekerings Nummer:</p></th>
-                        <th><p></p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" value="000100"></td>
-                        <td><p></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning text-white" data-dismiss="modal">
-                    Wijzig
-                </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="newModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title text-success font-weight-bold">Nieuwe patient</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;
-                </button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table class="table table-striped d-none d-xl-table">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                        <th><p>Verzekerings Nummer:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Naam"></td>
-                        <td><input type="date" class="form-control"></td>
-                        <td><input type="text" class="form-control" placeholder="Verzekerings Nummer"></td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <!-- Kleine devices -->
-                <table class="table table-striped d-table d-xl-none">
-                    <thead>
-                    <tr>
-                        <th><p>Naam:</p></th>
-                        <th><p>Geboorte datum:</p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Naam"></td>
-                        <td><input type="date" class="form-control"></td>
-                    </tr>
-                    </tbody>
-                    <thead>
-                    <tr>
-                        <th><p>Verzekerings Nummer:</p></th>
-                        <th><p></p></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Verzekerings nummer"></td>
-                        <td><p></p></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success text-white" data-dismiss="modal">
-                    Toevoegen
-                </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
-                    Close
-                </button>
             </div>
         </div>
     </div>
