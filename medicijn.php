@@ -51,50 +51,33 @@
         </nav>
         <main>
             <div class="jumbotron jumbotron-fluid">
-                <h1 style="padding-left: 1rem">Apotheker</h1>
+                <h1 style="padding-left: 1rem">Zorgverzekeraar</h1>
             </div>
-            <div class="search-container text-center">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Zoek medicijnen..." name="zoeken" style="width: 70%">
-                    <button class="bg-danger" type="submit"><b class="fa fa-search">Zoek</b></button>
-                </form>
+            <div class="jumbotron">
+                <?php
+                    try
+                    {
+                        $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
+
+                        $qeury = $db->prepare("SELECT * FROM medicatie WHERE id =  :id");
+                        $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+                        $qeury->bindParam("id", $id);
+                        $qeury->execute();
+                        $result = $qeury->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as &$data)
+                        {
+                            echo "Medicijn naam:<br>" . $data['naam'] . "<br>";
+                            echo "Omschrijving:<br>" . $data['omschrijving'] . "<br>";
+                            echo "Bijwerkingen:<br>" . $data['bijwerkingen'] . "<br>";
+                        }
+                    }
+                    catch(PDOException $e)
+                    {
+                        die("Error!: " . $e->getMessage());
+                    }
+                ?>
             </div>
-            <table class="table table-striped table-danger table-bordered" style="width: 80%;margin-left: 10%">
-                <thead>
-                    <tr>
-                        <td>Nummer</td>
-                        <td>Medicijn</td>
-                        <td>Voorraad</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        try
-                        {
-                            $i = 1;
-
-                            $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
-
-                            $qeury = $db->prepare("SELECT * FROM medicatie");
-                            $qeury->execute();
-                            $result = $qeury->fetchAll(PDO::FETCH_ASSOC);
-                            foreach ($result as &$data)
-                            {
-                                echo "<tr>";
-                                echo "<td>" . $i . "</td>";
-                                echo "<td><a href='medicijn.php?id=" . $data["id"] . "'>" . $data["naam"] . "</a></td>";
-                                echo "<td>" . $data["voorraad"] . "</td>";
-                                echo "</tr>";
-                                $i++;
-                            }
-                        }
-                        catch(PDOException $e)
-                        {
-                            die("Error!: " . $e->getMessage());
-                        }
-                    ?>
-                </tbody>
-            </table>
+            <a href="zv.php">Trug naar medicijnenpagina.</a>
         </main>
     </body>
 </html>
