@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-        <title>HealtOne: Apotheeker</title>
+        <title>HealtOne: Apotheeker - medicijnen</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -51,10 +51,63 @@
         </nav>
         <main>
             <div class="jumbotron jumbotron-fluid">
-                <h1 style="padding-left: 1rem">Apotheek</h1>
+                <h1 style="padding-left: 1rem">Aphotheek - medicijnen</h1>
             </div>
+            <div class="search-container text-center" style="width: 80%;margin-left: 10%">
+                <input class="form-control" id="mijnInvoer" type="text" placeholder="Zoek medicijnen...">
+                <br>
+            </div>
+            <table class="table table-striped table-danger table-bordered" style="width: 80%;margin-left: 10%">
+                <thead>
+                    <tr>
+                        <td>Nummer</td>
+                        <td>Medicijn</td>
+                        <td>Voorraad</td>
+                    </tr>
+                </thead>
+                <tbody id="mijnTabel">
+                    <?php
+                        try
+                        {
+                            $i = 1;
+
+                            $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
+
+                            $qeury = $db->prepare("SELECT * FROM medicatie");
+                            $qeury->execute();
+                            $result = $qeury->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($result as &$data)
+                            {
+                                echo "<tr>";
+                                echo "<td>" . $i . "</td>";
+                                echo "<td><a href='medicijn.php?id=" . $data["id"] . "'>" . $data["naam"] . "</a></td>";
+                                echo "<td>" . $data["voorraad"] . "</td>";
+                                echo "</tr>";
+                                $i++;
+                            }
+                        }
+                        catch(PDOException $e)
+                        {
+                            die("Error!: " . $e->getMessage());
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <script>
+                $(document).ready(function()
+                {
+                    $("#mijnInvoer").on("keyup", function()
+                    {
+                        var value = $(this).val().toLowerCase();
+                        $("#mijnTabel tr").filter(function()
+                        {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <a href="apotheeker.php"><button class="bg-danger" name="apotheek" value="apotheek" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">apotheek</button></a>
             <a href="patientenApotheek.php"><button class="bg-danger" name="patienten" value="patiënten" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">patiënten</button></a>
-            <a href="medicijnenApotheek.php"><button class="bg-danger" name="medicijnen" value="medicijnen" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">medicijnen</button></a>
             <a href="receptenApotheek.php"><button class="bg-danger" name="recepten" value="recepten" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">recepten</button></a>
         </main>
     </body>
