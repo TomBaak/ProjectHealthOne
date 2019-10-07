@@ -68,10 +68,12 @@ include("dbconnection.php");
                 <div class="jumbotron jumbotron-fluid text-center">
                     <h1>Recepten</h1>
                 </div>
-                <form class="d-none"method="get" action="patienten.php">
-                    <div class="input-group md-form form-sm form-2 pl-0">
-                        <input class="form-control my-0 py-1" type="text" name="search" placeholder="Zoeken">
-                        <button type="submit" class="btn btn-success">Zoek</button>
+                <form method="get" action="patienten.php">
+                    <div class="input-group mb-3">
+                        <input name="search" class="form-control" placeholder="Zoeken">
+                        <div class="input-group-append">
+                            <button type="sumbit" class="btn btn-primary bg-success text-white" style="border: 0;">Zoek</button>
+                        </div>
                     </div>
                 </form>
 
