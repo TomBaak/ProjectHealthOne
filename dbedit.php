@@ -7,7 +7,7 @@
             $name = $_POST['name'];
             $dob = $_POST['dob'];
             $vernum = $_POST['vernum'];
-            echo $_POST['name'];
+            $verzekerd = $_POST['verzekerd'];
         }
 
         switch ($_POST['type']){
@@ -19,7 +19,7 @@
                 break;
 
             case "edit":
-                    $query = $db->prepare("UPDATE `patienten` SET `naam`=:naam,`dob`=:dob WHERE vernum='" . $_POST['vernum'] . "'");
+                    $query = $db->prepare("UPDATE `patienten` SET `naam`=:naam,`dob`=:dob,`verzekered` WHERE vernum='" . $_POST['vernum'] . "'");
                     $query->bindParam("dob", $dob);
                     $query->bindParam("naam", $name);
                 break;
