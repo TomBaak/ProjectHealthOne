@@ -108,12 +108,9 @@ if (isset($_GET["user"])) {
 </nav>
 
 <div class="container" style="margin-top: 2.5rem">
-    <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
-        <h1>Kies gebruiker</h1>
-        <p>Kies uw specialisatie</p>
-    </div>
-
-    <div class="row">
+        <h1 class='text-dark font-weight-bold display-4'>Kies gebruiker</h1>
+        <p class='text-dark display-4'>Kies uw specialisatie</p>
+    <div class="row" style="margin-top: 5%">
         <div class="col-sm-4" style="margin-bottom: 2.5rem">
             <div class="card">
                 <img class="card-img-top" src="img/doc.jpg" alt="Card image" style="width:100%">

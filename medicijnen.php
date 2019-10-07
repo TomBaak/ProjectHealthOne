@@ -113,10 +113,8 @@ include("dbconnection.php");
     <div class="container position-relative w-75" style="margin-bottom: 2%">
         <div class="row">
             <div class="col">
-                <div class="jumbotron jumbotron-fluid text-center">
-                    <h1>Medicijnen</h1>
-                </div>
-                <form method="get" action="recepten.php">
+                <h1 class='text-dark font-weight-bold display-4'>Medicijnen</h1>
+                <form style="margin-top: 5%;" method="get" action="medicijnen.php">
                     <div class="input-group mb-3">
                         <input name="search" class="form-control" placeholder="Zoeken">
                         <div class="input-group-append">

@@ -99,10 +99,8 @@
 
 <body>
 <div class="container" style="margin-top: 1%">
-    <div class="jumbotron">
-        <h1>Contact</h1>
-    </div>
-    <dl class="list-group">
+        <h1 class='text-dark font-weight-bold display-4'>Contact</h1>
+    <dl style="margin-top: 5%" class="list-group">
         <dt class="list-group-item">Email</dt>
         <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
         <dt class="list-group-item">Telefoon</dt>
