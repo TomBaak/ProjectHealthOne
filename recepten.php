@@ -121,7 +121,7 @@ include("dbconnection.php");
                             echo "data-target=\"#editModal\">Aanpassen</button></a>";
                             echo "</td><td><a href='dbedit.php?vernum=" . "#" . "&type=del'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                             echo "<td>";
-                            echo "<a href='inf.php?id=" . "#" . "&type=inf&master=rec'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                            echo "<a href='inf.php?id=" . $data['receptid'] . "&type=inf&master=rec'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
                             echo "</tr>";
                         };
                     } catch (PDOException $e) {
