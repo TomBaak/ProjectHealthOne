@@ -108,7 +108,6 @@
     </nav>
 </div>
 
-
 <div class="container bg-transparent position-absolute" style="top: 27%; max-width: 100%;">
     <div class="container position-relative w-75" style="margin-bottom: 2%">
         <div class="row">

@@ -36,8 +36,8 @@ try {
                     echo "Error";
                 }
 
-                $startdatum = date("d-m-Y", strtotime($data['startdatum']));
-                $datumuitgeschreven = date("d-m-Y", strtotime($data['datumuitgeschreven']));
+                $startdatum = $data['startdatum'];
+                $datumuitgeschreven = $data['datumuitgeschreven'];
                 $duur = $data['receptduur'];
                 $dosering = $data['dosering'];
                 $opgehaald = $data['opgehaald'];
@@ -53,7 +53,7 @@ try {
 
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: <?php echo(($_GET['type'] == "new") ? "Nieuwe patient" : $naam); ?></title>
+    <title>HealtOne: Recept</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -124,7 +124,7 @@ try {
                                     echo $naam;
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"text\" value=\"$naam\" name=\"name\">";
+                                    echo "<input class=\"form-control\" type=\"text\" value=\"$naam\" name=\"name\" readonly>";
                                     break;
                                 case "new":
                                     echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
@@ -190,7 +190,7 @@ try {
                         <td><?php
                             switch ($_GET['type']) {
                                 case "inf":
-                                    echo $startdatum;
+                                    echo date("d-m-Y", strtotime($data['startdatum']));
                                     break;
                                 case "edit":
                                     echo "<input class=\"form-control\" type=\"date\" value='$startdatum' name=\"startdatum\">";
@@ -202,10 +202,18 @@ try {
                             ?></td>
                     </tr>
                     <?php
-                    if ($_GET['type'] != "new") {
-                        echo "<tr><th>Uitgeschreven op:</th><td>";
-                        echo $datumuitgeschreven;
-                        echo "</td></tr>";
+                    switch ($_GET['type']) {
+                        case "inf":
+                            echo "<tr><th>Uitgeschreven op:</th><td>";
+                            echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
+                            echo "</td></tr>";
+                            break;
+                        case "edit":
+                            echo "<tr><th>Uitgeschreven op:</th><td>";
+                            echo "<input class='form-control' type='date' name='startdatum' readonly value='$datumuitgeschreven'>";
+                            echo "</td></tr>";
+                            break;
+
                     }
                     ?>
                     <?php
@@ -214,19 +222,19 @@ try {
                         switch ($_GET['type']) {
                             case "edit":
                                 if ($opgehaald == 1) {
-                                    echo "<div class=\"custom-control custom-checkbox\">
+                                    echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\" checked=\"checked\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
                                         </div>";
                                 } else {
-                                    echo "<div class=\"custom-control custom-checkbox\">
+                                    echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
                                         </div>";
                                 }
                                 break;
                             case "new":
-                                echo "<div class=\"custom-control custom-checkbox\">
+                                echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
                                         </div>";
@@ -257,6 +265,7 @@ try {
                     echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
                     break;
             }
+            echo '<input type="hidden" value="rec" class="custom-control-input" name="master">';
             ?>
 
 

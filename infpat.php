@@ -133,19 +133,19 @@ try {
                             switch ($_GET['type']) {
                                 case "edit":
                                     if ($verzekerd == 1) {
-                                        echo "<div class=\"custom-control custom-checkbox\">
+                                        echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"verzekerd\" checked=\"checked\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Verzekerd</label>
                                         </div>";
                                     } else {
-                                        echo "<div class=\"custom-control custom-checkbox\">
+                                        echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"verzekerd\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Verzekerd</label>
                                         </div>";
                                     }
                                     break;
                                 case "new":
-                                    echo "<div class=\"custom-control custom-checkbox\">
+                                    echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"verzekerd\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Verzekerd</label>
                                         </div>";

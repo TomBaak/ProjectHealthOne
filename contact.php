@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: Home</title>
+    <title>HealtOne: Contact</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -78,35 +78,48 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item text-white">
                 Ingelogd als:
-            <?php
+                <?php
 
-            if(isset($_SESSION['user'])){
-                switch ($_SESSION['user']){
+                if (isset($_SESSION['user'])) {
+                    switch ($_SESSION['user']) {
 
-                    case "app": echo "Apotheker"; break;
-                    case "verz": echo "Verzekeraar"; break;
-                    case "arts": echo "Arts"; break;
-                    default: break;
+                        case "app":
+                            echo "Apotheker";
+                            break;
+                        case "verz":
+                            echo "Verzekeraar";
+                            break;
+                        case "arts":
+                            echo "Arts";
+                            break;
+                        default:
+                            break;
 
+                    }
                 }
-            }
 
-            ?>
+                ?>
             </li>
         </ul>
     </div>
 </nav>
 
 <body>
-<div class="container" style="margin-top: 1%">
-        <h1 class='text-dark font-weight-bold display-4'>Contact</h1>
-    <dl style="margin-top: 5%" class="list-group">
-        <dt class="list-group-item">Email</dt>
-        <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
-        <dt class="list-group-item">Telefoon</dt>
-        <dd class="list-group-item">+31 612547858</dd>
-    </dl>
-
+<div class="container" style="margin-top: 3%">
+    <div class="row">
+        <div class="col">
+            <h1 class='text-dark font-weight-bold display-4'>Contact</h1>
+            <dl style="margin-top: 5%" class="list-group">
+                <dt class="list-group-item">Email</dt>
+                <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
+                <dt class="list-group-item">Telefoon</dt>
+                <dd class="list-group-item">+31 612547858</dd>
+                <dt class="list-group-item">Adres</dt>
+                <dd class="list-group-item"><a href="https://goo.gl/maps/TwQVrxKLHmeGWnSJ8" target="_blank">Tinwef
+                        10</a></dd>
+            </dl>
+        </div>
+    </div>
 </div>
 </body>
 

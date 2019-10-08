@@ -65,6 +65,16 @@
 
             //all db edits for the recepten table
             case "rec":
+                if($_POST['type'] != "del"){
+                    $name = $_POST['name'];
+                    $dob = $_POST['dob'];
+                    $vernum = $_POST['vernum'];
+                    if($_POST['verzekerd'] == "on"){
+                        $verzekerd = 1;
+                    }else{
+                        $verzekerd = 0;
+                    }
+                }
 
                 break;
 
