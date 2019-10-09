@@ -123,7 +123,7 @@
                 </form>
 
                 <a href="infpat.php?id=&type=new&master=pat">
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuwe
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuwe
                         patient
                     </button>
                 </a>
@@ -175,10 +175,10 @@
                                         echo "<p class=\"text-success font-weight-bold\">Verzekerd</p>";
                                         echo "</td>";
                                     }
-                                    echo "<td><a href='infpat.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white \">Wijzig</button></a>";
+                                    echo "<td><a href='infpat.php?id=" . $data['vernum'] . "&type=edit&master=pat'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a>";
                                     echo "</td><td><a href='dbedit.php?vernum=" . $data['vernum'] . "&type=del&master=pat'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                                     echo "<td>";
-                                    echo "<a href='infpat.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                                    echo "<a href='infpat.php?id=" . $data['vernum'] . "&type=inf&master=pat'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
                                     echo "</tr>";
                                 };
                             }else{

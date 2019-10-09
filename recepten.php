@@ -124,7 +124,7 @@ include("dbconnection.php");
                 </form>
 
                 <a href="infrec.php?id=&type=new&master=rec">
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuw recept
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuw recept
                     </button>
                 </a>
 
@@ -191,10 +191,10 @@ include("dbconnection.php");
                                 echo "<p class=\"text-success font-weight-bold\">Opgehaald</p>";
                                 echo "</td>";
                             }
-                            echo "<td><a href='infrec.php?id=" . $data['id'] . "&type=edit&master=rec'><button type=\"button\" class=\"btn bg-warning text-white \">Wijzig</button></a>";
+                            echo "<td><a href='infrec.php?id=" . $data['id'] . "&type=edit&master=rec'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a>";
                             echo "</td><td><a href='dbedit.php?id=" . $data['id'] . "&type=del&master=rec'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                             echo "<td>";
-                            echo "<a href='infrec.php?id=" . $data['id'] . "&type=inf&master=rec'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                            echo "<a href='infrec.php?id=" . $data['id'] . "&type=inf&master=rec'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
                             echo "</tr>";
                         };
                     } catch (PDOException $e) {

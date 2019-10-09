@@ -133,8 +133,10 @@ try {
                                     echo "<input class=\"d-none\" type=\"text\" name=\"id\" value='$id'>";
                                     break;
                                 case "new":
-                                    //begin van select
-                                    echo "<select name=\"pat\" class=\"custom-select\">
+                                    //search voor JQuery
+                                    echo "<input class=\"form-control\" id=\"inputName\" type=\"text\" placeholder=\"Zoek patient..\"><br>";
+                                    //begin van select met ID voor JQuery
+                                    echo "<select id='nameList' name=\"pat\" class=\"custom-select\">
                                           <option selected class='text-muted'>Kies een patient</option>";
 
                                     //haalt alle naam namen van patienten uit db
@@ -164,11 +166,13 @@ try {
                                     echo $medicijn;
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"text\" value='$medicijn' name=\"medicijn\" readonly>";
+                                    echo "<input id='inputMed' class=\"form-control\" type=\"text\" value='$medicijn' name=\"medicijn\" readonly>";
                                     break;
                                 case "new":
-                                    //begin select
-                                    echo "<select name=\"med\" class=\"custom-select\">
+                                    //search voor JQuery
+                                    echo "<input class=\"form-control\" id=\"inputMed\" type=\"text\" placeholder=\"Zoek medicijn..\"><br>";
+                                    //begin select met ID voor JQuery
+                                    echo "<select id='medList' name=\"med\" class=\"custom-select\">
                                           <option selected class='text-muted'>Kies een medicijn</option>";
 
                                     //haalt alle naam namen van patienten uit db
@@ -299,11 +303,11 @@ try {
 
             switch ($_GET['type']) {
                 case "edit":
-                    echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig\">";
+                    echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig recept\">";
                     break;
                 case "new":
                     echo "<input class='d-none' type=\"date\" name=\"datumuitgeschreven\" value='" . date("Y-m-d") . "'></td>";
-                    echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
+                    echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Recept Uitschrijven\">";
                     break;
             }
             echo '<input type="hidden" value="rec" class="custom-control-input" name="master">';
@@ -319,3 +323,22 @@ try {
 
 </body>
 </html>
+
+<script>
+    $(document).ready(function(){
+        $("#inputName").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#nameList *").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    $(document).ready(function(){
+        $("#inputMed").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#medList *").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

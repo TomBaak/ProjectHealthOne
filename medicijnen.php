@@ -132,6 +132,7 @@ include("dbconnection.php");
                     <thead>
                     <tr>
                         <th style="min-width: 30%"><p>Medicijn</p></th>
+                        <th><p>Prijs</p></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -156,10 +157,13 @@ include("dbconnection.php");
                             echo "<td>";
                             echo $data['naam'];
                             echo "</td>";
-                            echo "<td><a href='infrec.php?id=" . $data['id'] . "&type=edit&master=med'><button type=\"button\" class=\"btn bg-warning text-white \">Wijzig</button></a>";
-                            echo "</td><td><a href='dbedit.php?id=" . $data['id'] . "&type=del&master=med'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                             echo "<td>";
-                            echo "<a href='infrec.php?id=" . $data['id'] . "&type=inf&master=med'><button type=\"button\" class=\"btn bg-dark text-white \">Bekijk</button></a></td>";
+                            echo "&euro; " . $data['prijs'];
+                            echo "</td>";
+                            echo "<td><a href='infmed.php?id=" . $data['id'] . "&type=edit&master=med'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a>";
+                            echo "</td><td><a href='#?id=" . $data['id'] . "&type=del&master=med'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                            echo "<td>";
+                            echo "<a href='infmed.php?id=" . $data['id'] . "&type=inf&master=med'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
                             echo "</tr>";
                         };
                     } catch (PDOException $e) {
