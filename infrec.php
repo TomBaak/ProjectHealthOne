@@ -35,7 +35,11 @@ try {
                 } else {
                     echo "Error";
                 }
-
+                if ($data['id'] != NULL) {
+                    $id = $data['id'];
+                } else {
+                    $id = 0;
+                }
                 $startdatum = $data['startdatum'];
                 $datumuitgeschreven = $data['datumuitgeschreven'];
                 $duur = $data['receptduur'];
@@ -114,23 +118,42 @@ try {
 
                 <tbody>
 
-                <form method="post" action="dbedit.php">
+                <form method="post" action="dbedit.php" id="recform">
 
                     <tr>
                         <th>Patient naam:</th>
                         <td><?php
+                            echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
                             switch ($_GET['type']) {
                                 case "inf":
                                     echo $naam;
                                     break;
                                 case "edit":
                                     echo "<input class=\"form-control\" type=\"text\" value=\"$naam\" name=\"name\" readonly>";
+                                    echo "<input class=\"d-none\" type=\"text\" name=\"id\" value='$id'>";
                                     break;
                                 case "new":
-                                    echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
+                                    //begin van select
+                                    echo "<select name=\"pat\" class=\"custom-select\">
+                                          <option selected class='text-muted'>Kies een patient</option>";
+
+                                    //haalt alle naam namen van patienten uit db
+                                    $query = $db->prepare("SELECT * FROM patienten");
+
+                                    if ($query->execute()) {
+                                        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                        foreach ($result as &$data) {
+                                            echo "<option value='" . $data['vernum'] . "'>" . $data['naam'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "Error";
+                                    }
+
+                                    //einde select
+                                    echo "</select>";
                                     break;
                             }
-                            echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
                             ?></td>
                     </tr>
                     <tr>
@@ -141,10 +164,28 @@ try {
                                     echo $medicijn;
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"text\" value='$medicijn' name=\"dob\">";
+                                    echo "<input class=\"form-control\" type=\"text\" value='$medicijn' name=\"medicijn\" readonly>";
                                     break;
                                 case "new":
-                                    echo "<input class=\"form-control\" type=\"date\" name=\"dob\">";
+                                    //begin select
+                                    echo "<select name=\"med\" class=\"custom-select\">
+                                          <option selected class='text-muted'>Kies een medicijn</option>";
+
+                                    //haalt alle naam namen van patienten uit db
+                                    $query = $db->prepare("SELECT * FROM medicijnen");
+
+                                    if ($query->execute()) {
+                                        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                        foreach ($result as &$data) {
+                                            echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "Error";
+                                    }
+
+                                    //einde select
+                                    echo "</select>";
                                     break;
                             }
                             ?></td>
@@ -157,7 +198,7 @@ try {
                                     echo $duur . " dagen";
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"number\" value='$duur' name=\"dob\">";
+                                    echo "<input class=\"form-control\" type=\"number\" value='$duur' name=\"duur\">";
                                     echo "<p style='margin: 0;' class='text-muted'>duur in dagen</p>";
                                     break;
                                 case "new":
@@ -173,14 +214,15 @@ try {
                             switch ($_GET['type']) {
                                 case "inf":
                                     echo $dosering . " mg";
+                                    echo "<p style='margin: 0;' class='text-muted'>Per inname</p>";
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"number\" value='$dosering' name=\"dob\">";
-                                    echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg</p>";
+                                    echo "<input class=\"form-control\" type=\"number\" value='$dosering' name=\"dosering\">";
+                                    echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg per inname</p>";
                                     break;
                                 case "new":
                                     echo "<input class=\"form-control\" type=\"number\" name=\"dosering\">";
-                                    echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg</p>";
+                                    echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg per inname</p>";
                                     break;
                             }
                             ?></td>
@@ -210,7 +252,7 @@ try {
                             break;
                         case "edit":
                             echo "<tr><th>Uitgeschreven op:</th><td>";
-                            echo "<input class='form-control' type='date' name='startdatum' readonly value='$datumuitgeschreven'>";
+                            echo "<input class='form-control' type='date' name='datumuitgeschreven' readonly value='$datumuitgeschreven'>";
                             echo "</td></tr>";
                             break;
 
@@ -221,21 +263,21 @@ try {
                         echo "<tr><th>Opgehaald:</th><td>";
                         switch ($_GET['type']) {
                             case "edit":
+
+                                echo "<div class='custom-control custom-switch'>";
+
                                 if ($opgehaald == 1) {
-                                    echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\" checked=\"checked\">
-                                        <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
-                                        </div>";
+                                    echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\" checked=\"checked\">";
                                 } else {
-                                    echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\">
-                                        <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
-                                        </div>";
+                                    echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\">";
                                 }
+                                echo "<label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
+                                        </div>";
                                 break;
+
                             case "new":
                                 echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" name=\"opgehaald\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
                                         </div>";
                                 break;
@@ -250,12 +292,11 @@ try {
                         };
                         echo "</td></tr>";
                     };
-                    echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
                     ?>
                 </tbody>
             </table>
-
             <?php
+
             switch ($_GET['type']) {
                 case "edit":
                     echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig\">";
