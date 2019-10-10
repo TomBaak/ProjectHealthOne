@@ -13,6 +13,7 @@
                     $beschrijving = $data['beschrijving'];
                     //maakt van de lijst met bijwerkingen een array door deze te splitsen bij elkse comma
                     $bijwerkingen = explode(",", $data['bijwerkingen']);
+                    $bijwerkingenRaw = $data['bijwerkingen'];
                     $prijs = $data['prijs'];
                     $vergoed = $data['vergoed'];
                 };
@@ -38,10 +39,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"s
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/theme_HO.css">
+    <script src="http://code.jquery.com/jquery-1.5.js"></script>
+    <script>
+        function countChar(val) {
+            var len = val.value.length;
+            if (len > 255) {
+                val.value = val.value.substring(0, 255);
+            } else {
+                $('#charNum').text(255 - len + "/" + 255);
+            }
+        };
+    </script>
 </head>
 
 <body>
@@ -73,13 +85,13 @@
             <?php
                 switch ($_GET['type']) {
                     case 'inf':
-                        echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Recept Info</h1>";
+                        echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Medicijn Info</h1>";
                         break;
                     case 'edit':
-                        echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Recept Wijzigen</h1>";
+                        echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Medicijn Wijzigen</h1>";
                         break;
                     case 'new':
-                        echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuw Recept</h1>";
+                        echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuw medicijn</h1>";
                         break;
                 };
             ?>
@@ -97,7 +109,11 @@
                                 switch ($_GET['type']) {
 
                                     case "inf":
+                                    case "edit":
                                         echo $naam;
+                                        break;
+                                    case "new":
+
                                         break;
 
                                 };
@@ -107,7 +123,6 @@
                     <tr>
                         <th>Beschrijving:</th>
                         <td>
-                            <ul class="list-group list-group-flush">
                                 <?php
 
 
@@ -116,14 +131,28 @@
                                         case "inf":
                                             echo $beschrijving;
                                             break;
+                                        case "edit":
+                                            echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                            min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\">$beschrijving</textarea>
+                                            <p style='margin-bottom: 0;margin-top: 0.5rem' class='text-muted'>Resterend aantal characters: 
+                                            <span style='margin-top: 0.5rem' class=\"badge badge-warning\" id='charNum'>255/255</span></p>";
+                                            break;
+                                        case "new":
+                                            echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                            min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\"></textarea>
+                                            <p style='margin-bottom: 0;margin-top: 0.5rem' class='text-muted'>Resterend aantal characters: 
+                                            <span style='margin-top: 0.5rem' class=\"badge badge-warning\" id='charNum'>255/255</span></p>";
+                                            break;
+
 
                                     };
 
-                                ?></ul>
+                                ?>
                         </td>
                     </tr>
                     <tr>
                         <th>Bijwerkingen:</th>
+                        <ul class="list-group list-group-flush">
                         <td><?php
 
 
@@ -132,13 +161,27 @@
                                     case "inf":
                                         //maakt list van de array met bijwerkingen
                                         for ($i = 0; $i < sizeof($bijwerkingen); $i++){
-                                            echo "<li class='list-group-item'>- $bijwerkingen[$i]</li>";
+                                            if($bijwerkingen[$i] != ""){
+                                                echo "<li class='list-group-item'>- $bijwerkingen[$i]</li>";
+                                            };
+
                                         }
+                                        break;
+                                    case "edit":
+                                        echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                            min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\">$bijwerkingenRaw</textarea>
+                                            <p class='text-muted'><b CLASS='text-danger'>LET OP:</b> Plaats na elke bijwerking een comma voorbeeld: hoofdpijn,misselijkheid,moeheid</p>";
+                                        break;
+                                    case "new":
+                                        echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                            min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\"></textarea>
+                                            <p class='text-muted'><b CLASS='text-danger'>LET OP:</b> Plaats na elke bijwerking een comma voorbeeld: hoofdpijn,misselijkheid,moeheid</p>";
                                         break;
 
                                 };
 
                             ?></td>
+                        </ul>
                     </tr>
                     <tr>
                         <th>Prijs:</th>
@@ -150,7 +193,9 @@
                                     case "inf":
                                         echo "&euro; " . number_format($prijs, 2);
                                         break;
-
+                                    case "edit":
+                                        echo "&euro; <input min='0.1' type='number' step='any' name='prijs' value='$prijs'>";
+                                        break;
                                 };
 
                             ?></td>
@@ -173,12 +218,12 @@
                                     case "edit":
                                         if($vergoed == 1){
                                             echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" name=\"vergoed\" checked>
+                                        <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"vergoed\" checked>
                                         <label class=\"custom-control-label\" for=\"customCheck\">Wordt vergoed</label>
                                         </div>";
                                         }else{
                                             echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" name=\"vergoed\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"vergoed\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Wordt vergoed</label>
                                         </div>";
                                         }
@@ -194,11 +239,11 @@
 
                 switch ($_GET['type']) {
                     case "edit":
-                        echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig recept\">";
+                        echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $naam\">";
                         break;
                     case "new":
                         echo "<input class='d-none' type=\"date\" name=\"datumuitgeschreven\" value='" . date("Y-m-d") . "'></td>";
-                        echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Recept Uitschrijven\">";
+                        echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Medicijn toevoegen\">";
                         break;
                 }
                 echo '<input type="hidden" value="rec" class="custom-control-input" name="master">';
@@ -211,6 +256,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

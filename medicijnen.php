@@ -123,8 +123,8 @@ include("dbconnection.php");
                     </div>
                 </form>
 
-                <a href="infrec.php?id=&type=new&master=rec">
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success" type="button">Nieuw recept
+                <a href="infmed.php?id=&type=new">
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuw medicijn
                     </button>
                 </a>
 

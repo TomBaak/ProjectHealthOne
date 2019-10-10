@@ -202,11 +202,11 @@ try {
                                     echo $duur . " dagen";
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"number\" value='$duur' name=\"duur\">";
+                                    echo "<input min='1' class=\"form-control\" type=\"number\" value='$duur' name=\"duur\">";
                                     echo "<p style='margin: 0;' class='text-muted'>duur in dagen</p>";
                                     break;
                                 case "new":
-                                    echo "<input class=\"form-control\" type=\"number\" name=\"duur\">";
+                                    echo "<input min='1' class=\"form-control\" type=\"number\" name=\"duur\">";
                                     echo "<p style='margin: 0;' class='text-muted'>duur in dagen</p>";
                                     break;
                             }
@@ -221,11 +221,11 @@ try {
                                     echo "<p style='margin: 0;' class='text-muted'>Per inname</p>";
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"number\" value='$dosering' name=\"dosering\">";
+                                    echo "<input min='1 class=\"form-control\" type=\"number\" value='$dosering' name=\"dosering\">";
                                     echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg per inname</p>";
                                     break;
                                 case "new":
-                                    echo "<input class=\"form-control\" type=\"number\" name=\"dosering\">";
+                                    echo "<input min='1' class=\"form-control\" type=\"number\" name=\"dosering\">";
                                     echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg per inname</p>";
                                     break;
                             }

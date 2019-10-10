@@ -67,10 +67,11 @@ try {
         case "rec":
             if (!isset($_GET['type'])) {
                 //haalt alleen id op bij edit
-                if($_POST['type'] == "edit"){
-                $id = $_POST['id'];};
+                if ($_POST['type'] == "edit") {
+                    $id = $_POST['id'];
+                };
 
-                if($_POST['type'] == "new"){
+                if ($_POST['type'] == "new") {
                     $pat = $_POST['pat'];
                     $med = $_POST['med'];
                 }
@@ -113,7 +114,7 @@ try {
                         break;
 
                 }
-            }elseif ($_GET['id'] != NULL) {
+            } elseif ($_GET['id'] != NULL) {
                 $query = $db->prepare("DELETE FROM `recepten` WHERE id=" . $_GET['id']);
             }
 
@@ -124,6 +125,12 @@ try {
                 echo "<h1>Er is een fout opgetreden</h1>";
                 echo "<a href='index.php'>Ga terug</a>";
             };
+
+            break;
+
+
+        //all db edits for the medicijnen table
+        case "rec":
 
             break;
 
