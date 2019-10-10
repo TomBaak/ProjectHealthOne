@@ -17,6 +17,12 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/theme_HO.css">
+    <style>
+        .testimg {
+            height: 200px;
+            background: #aaa;
+        }
+    </style>
 </head>
 <body>
 
@@ -50,39 +56,42 @@
     </div>
 </nav>
 
-<div class="container" style="margin-top: 2.5rem">
-    <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
-        <h1>Kies gebruiker</h1>
-        <p>Kies uw specialisatie</p>
-    </div>
-
+<div class="container" style="margin-top:30px" style="margin-bottom:30px">
     <div class="row">
-        <div class="col-sm-4"  style="margin-bottom: 2.5rem">
-            <div class="card">
-                <img class="card-img-top" src="img/doc.jpg" alt="Card image" style="width:100%">
-                <div class="card-body">
-                    <h4 class="card-title">(Huis)Arts</h4>
-                    <a href="arts.php" class="btn btn-primary">Kies specialisme</a>
-                </div>
-            </div>
+        <div class="col-sm-4">
+            <h2>About Me</h2>
+            <h5>Photo of me:</h5>
+            <img class="card-img-top" src="img/doc.jpg" alt="Card image" style="width:70%">
+            <p>Medewerker hulpverlening Arts</p>
+            <h3>Agenda</h3>
+            <p>Geplande activiteiten voor aankomende week:</p>
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Maandag: vrij</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Dinsdag: recepten opsturen westland-locatie</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Woensdag: start project HealthOne</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Donderdag: vrij</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Vrijdag: meeting vergaderzaal B</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Zaterdag: afronden project HealthOne</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Zondag: Vrij</a>
+                </li>
+            </ul>
+            <hr class="d-sm-none">
         </div>
-        <div class="col-sm-4"  style="margin-bottom: 2.5rem">
-            <div class="card">
-                <img class="card-img-top" src="img/pharmacist_23-2148174589.jpg" alt="Card image" style="width:100%">
-                <div class="card-body">
-                    <h4 class="card-title">Apotheek</h4>
-                    <a href="#" class="btn btn-primary">Kies specialisme</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4"  style="margin-bottom: 2.5rem">
-            <div class="card">
-                <img class="card-img-top" src="img/insurance.jpg" alt="Card image" style="width:100%">
-                <div class="card-body">
-                    <h4 class="card-title">Verzekeraar</h4>
-                    <a href="#" class="btn btn-primary">Kies specialisme</a>
-                </div>
-            </div>
+        <div class="col-sm-8">
+
         </div>
     </div>
 </div>
