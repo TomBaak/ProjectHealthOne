@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-        <title>HealtOne: Apotheeker - medicijn - bescrijving</title>
+        <title>HealtOne: Apotheeker - recepten</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -51,33 +51,66 @@
         </nav>
         <main>
             <div class="jumbotron jumbotron-fluid">
-                <h1 style="padding-left: 1rem">Medicijn gegevens</h1>
+                <h1 style="padding-left: 1rem">Apotheek - recepten</h1>
             </div>
-            <div class="jumbotron">
+            <div class="search-container text-center" style="width: 80%;margin-left: 10%">
+                <input class="form-control" id="mijnInvoer" type="text" placeholder="Zoek patiënten...">
+                <br>
+            </div>
+            <table class="table table-striped table-danger text-center table-bordered" style="width: 80%;margin-left: 10%">
+                <thead>
+                    <tr>
+                        <td>Klant Nummer</td>
+                        <td>Naam</td>
+                        <td>Medicijnen</td>
+                        <td>Opmerkingen</td>
+                    </tr>
+                </thead>
+                <tbody id="mijnTabel">
                 <?php
-                    try
-                    {
-                        $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
+                try
+                {
+                    $i = 1;
 
-                        $qeury = $db->prepare("SELECT * FROM medicatie WHERE id =  :id");
-                        $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
-                        $qeury->bindParam("id", $id);
-                        $qeury->execute();
-                        $result = $qeury->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($result as &$data)
-                        {
-                            echo "Medicijn naam:<br>" . $data['naam'] . "<br>";
-                            echo "Omschrijving:<br>" . $data['omschrijving'] . "<br>";
-                            echo "Bijwerkingen:<br>" . $data['bijwerkingen'] . "<br>";
-                        }
-                    }
-                    catch(PDOException $e)
+                    $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
+
+                    $qeury = $db->prepare("SELECT * FROM recepten");
+                    $qeury->execute();
+                    $result = $qeury->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($result as &$data)
                     {
-                        die("Error!: " . $e->getMessage());
+                        echo "<tr>";
+                        echo "<td>" . $data["patienten_nummer"] . "</td>";
+                        echo "<td>" . $data["patienten_naam"] . "</td>";
+                        echo "<td>" . $data["medicijnen"] . "</td>";
+                        echo "<td>" . $data["opmerking"] . "</td>";
+                        echo "</tr>";
+                        $i++;
                     }
+                }
+                catch(PDOException $e)
+                {
+                    die("Error!: " . $e->getMessage());
+                }
                 ?>
-            </div>
-            <a href="medicijnenApotheek.php">Trug naar medicijnenpagina.</a>
+                </tbody>
+            </table>
+            <script>
+                $(document).ready(function()
+                {
+                    $("#mijnInvoer").on("keyup", function()
+                    {
+                        var value = $(this).val().toLowerCase();
+                        $("#mijnTabel tr").filter(function()
+                        {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <a href="apotheeker.php"><button class="bg-danger" name="apotheek" value="apotheek" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">apotheek</button></a>
+            <a href="patientenApotheek.php"><button class="bg-danger" name="patienten" value="patiënten" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">patiënten</button></a>
+            <a href="medicijnenApotheek.php"><button class="bg-danger" name="medicijnen" value="medicijnen" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">medicijnen</button></a>
         </main>
     </body>
 </html>

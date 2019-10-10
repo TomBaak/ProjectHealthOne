@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-        <title>HealtOne: Apotheeker</title>
+        <title>HealtOne: Apotheeker - patiënten</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -51,39 +51,37 @@
         </nav>
         <main>
             <div class="jumbotron jumbotron-fluid">
-                <h1 style="padding-left: 1rem">Apotheker</h1>
+                <h1 style="padding-left: 1rem">Apotheek - paciënten</h1>
             </div>
-            <div class="search-container text-center">
-                <form action="/action_page.php">
-                    <input type="text" placeholder="Zoek medicijnen..." name="zoeken" style="width: 70%">
-                    <button class="bg-danger" type="submit"><b class="fa fa-search">Zoek</b></button>
-                </form>
+            <div class="search-container text-center" style="width: 80%;margin-left: 10%">
+                <input class="form-control" id="mijnInvoer" type="text" placeholder="Zoek patiënten...">
+                <br>
             </div>
-            <table class="table table-striped table-danger table-bordered" style="width: 80%;margin-left: 10%">
+            <table class="table table-striped table-danger text-center table-bordered" style="width: 80%;margin-left: 10%">
                 <thead>
                     <tr>
-                        <td>Nummer</td>
-                        <td>Medicijn</td>
-                        <td>Voorraad</td>
+                        <td>ID nummer</td>
+                        <td>Voornaam</td>
+                        <td>Achternaam</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="mijnTabel">
                     <?php
-                        try
+                    try
                         {
                             $i = 1;
 
                             $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
 
-                            $qeury = $db->prepare("SELECT * FROM medicatie");
+                            $qeury = $db->prepare("SELECT * FROM patienten");
                             $qeury->execute();
                             $result = $qeury->fetchAll(PDO::FETCH_ASSOC);
                             foreach ($result as &$data)
                             {
                                 echo "<tr>";
-                                echo "<td>" . $i . "</td>";
-                                echo "<td><a href='medicijn.php?id=" . $data["id"] . "'>" . $data["naam"] . "</a></td>";
-                                echo "<td>" . $data["voorraad"] . "</td>";
+                                echo "<td>" . $data["id_nummer"] . "</td>";
+                                echo "<td>" . $data["voornaam"] . "</td>";
+                                echo "<td>" . $data["achternaam"] . "</td>";
                                 echo "</tr>";
                                 $i++;
                             }
@@ -95,6 +93,22 @@
                     ?>
                 </tbody>
             </table>
+            <script>
+                $(document).ready(function()
+                {
+                    $("#mijnInvoer").on("keyup", function()
+                    {
+                        var value = $(this).val().toLowerCase();
+                        $("#mijnTabel tr").filter(function()
+                        {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+            <a href="apotheeker.php"><button class="bg-danger" name="apotheek" value="apotheek" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">apotheek</button></a>
+            <a href="medicijnenApotheek.php"><button class="bg-danger" name="medicijnen" value="medicijnen" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">medicijnen</button></a>
+            <a href="receptenApotheek.php"><button class="bg-danger" name="recepten" value="recepten" style="width: 10%; height: 10%; text-align: center; margin: 3% 11% 3% 11%;">recepten</button></a>
         </main>
     </body>
 </html>
