@@ -59,7 +59,7 @@
                     {
                         $db = new PDO("mysql:host=localhost;dbname=healthone","root", "");
 
-                        $qeury = $db->prepare("SELECT * FROM medicatie WHERE id =  :id");
+                        $qeury = $db->prepare("SELECT * FROM medicijnen WHERE id =  :id");
                         $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                         $qeury->bindParam("id", $id);
                         $qeury->execute();
