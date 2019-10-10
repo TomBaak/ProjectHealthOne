@@ -138,8 +138,5 @@ if (isset($_GET["user"])) {
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-</body>
+    </body>
 </html>

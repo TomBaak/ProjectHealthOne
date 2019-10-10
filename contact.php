@@ -18,14 +18,12 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/theme_HO.css">
 </head>
-
 <div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
     <div class="container">
         <img src="img/logo.png" style="width: 8%">
         <p>Zilverenkruis </p>
     </div>
 </div>
-
 <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
     <a class="navbar-brand" href="#">Navigatie</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -103,7 +101,6 @@
         </ul>
     </div>
 </nav>
-
 <body>
 <div class="container" style="margin-top: 3%">
     <div class="row">
@@ -120,7 +117,13 @@
             </dl>
         </div>
     </div>
+    <dl class="list-group">
+        <dt class="list-group-item">Email</dt>
+        <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
+        <dt class="list-group-item">Telefoon</dt>
+        <dd class="list-group-item">+31 612547858</dd>
+    </dl>
 </div>
 </body>
-
+</body>
 </html>
