@@ -52,6 +52,7 @@ try {
                     break;
             };
 
+<<<<<<< HEAD
 
             if ($query->execute()) {
                 echo "Patient toegevoegd ";
@@ -88,6 +89,43 @@ try {
                 }
 
 
+=======
+
+            if ($query->execute()) {
+                echo "Patient toegevoegd ";
+                header("Location: patienten.php");
+            } else {
+                echo "<h1>Er is een fout opgetreden</h1>";
+                echo "<a href='index.php'>Ga terug</a>";
+            };
+
+            break;
+
+        //all db edits for the recepten table
+        case "rec":
+            if (!isset($_GET['type'])) {
+                //haalt alleen id op bij edit
+                if($_POST['type'] == "edit"){
+                $id = $_POST['id'];};
+
+                if($_POST['type'] == "new"){
+                    $pat = $_POST['pat'];
+                    $med = $_POST['med'];
+                }
+
+                $dosering = $_POST['dosering'];
+                $duur = $_POST['duur'];
+                $startdatum = $_POST['startdatum'];
+
+                //zet de juiste waarde neer in verzekerd
+                if (isset($_POST['opgehaald'])) {
+                    $verzekerd = 1;
+                } else {
+                    $verzekerd = 0;
+                }
+
+
+>>>>>>> 3031e0333e345078c7a1845ea76f2ce55406c222
                 switch ($_POST['type']) {
 
                     case 'edit':
@@ -96,6 +134,7 @@ try {
                         $query->bindParam("dosering", $dosering);
                         $query->bindParam("startdatum", $startdatum);
                         $query->bindParam("duur", $duur);
+<<<<<<< HEAD
 
                         break;
 
@@ -108,13 +147,31 @@ try {
                         $query->bindParam("med", $med);
                         break;
 
+=======
+
+                        break;
+
+                    case 'new':
+                        $query = $db->prepare("INSERT INTO `recepten`(`patid`, `medicijn`, `startdatum`, `receptduur`, `dosering`) VALUES (:pat,:med,:startdatum,:duur,:dosering)");
+                        $query->bindParam("duur", $duur);
+                        $query->bindParam("dosering", $dosering);
+                        $query->bindParam("startdatum", $startdatum);
+                        $query->bindParam("pat", $pat);
+                        $query->bindParam("med", $med);
+                        break;
+
+>>>>>>> 3031e0333e345078c7a1845ea76f2ce55406c222
                     default:
 
 
                         break;
 
                 }
+<<<<<<< HEAD
             } elseif ($_GET['id'] != NULL) {
+=======
+            }elseif ($_GET['id'] != NULL) {
+>>>>>>> 3031e0333e345078c7a1845ea76f2ce55406c222
                 $query = $db->prepare("DELETE FROM `recepten` WHERE id=" . $_GET['id']);
             }
 
@@ -127,12 +184,15 @@ try {
             };
 
             break;
+<<<<<<< HEAD
 
 
         //all db edits for the medicijnen table
         case "rec":
 
             break;
+=======
+>>>>>>> 3031e0333e345078c7a1845ea76f2ce55406c222
 
     }
 

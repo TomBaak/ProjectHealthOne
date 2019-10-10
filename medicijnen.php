@@ -122,7 +122,6 @@ include("dbconnection.php");
                         </div>
                     </div>
                 </form>
-
                 <a href="infmed.php?id=&type=new">
                     <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuw medicijn
                     </button>
