@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: Recepten</title>
+    <title>HealtOne: Medicijnen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -56,7 +56,7 @@ include("dbconnection.php");
                         case "verz":
 
                             echo "<li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a>
+                <a class=\"nav-link active\" href=\"medicijnen.php\">Medicijnen</a>
             </li>";
 
                         case "app":
@@ -65,7 +65,7 @@ include("dbconnection.php");
 
                             echo "
                         <li class=\"nav-item\">
-                <a class=\"nav-link active\" href=\"recepten.php\">Recepten</a>
+                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
             </li>
             <li class=\"nav-item\">
                 <a class=\"nav-link\" href=\"patienten.php\">Patienten</a>
@@ -113,8 +113,8 @@ include("dbconnection.php");
     <div class="container position-relative w-75" style="margin-bottom: 2%">
         <div class="row">
             <div class="col">
-                <h1 class='text-dark font-weight-bold display-4'>Recepten</h1>
-                <form style="margin-top: 5%;" method="get" action="recepten.php">
+                <h1 class='text-dark font-weight-bold display-4'>Medicijnen</h1>
+                <form style="margin-top: 5%;" method="get" action="medicijnen.php">
                     <div class="input-group mb-3">
                         <input name="search" class="form-control" placeholder="Zoeken">
                         <div class="input-group-append">
@@ -122,19 +122,16 @@ include("dbconnection.php");
                         </div>
                     </div>
                 </form>
-
-                <a href="infrec.php?id=&type=new&master=rec">
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuw recept
+                <a href="infmed.php?id=&type=new">
+                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuw medicijn
                     </button>
                 </a>
 
                 <table class="table table-striped" style="margin-top: 2rem; margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th style="min-width: 30%"><p>Naam patient:</p></th>
-                        <th><p>Medicijn:</p></th>
-                        <th><p>Datum uitgeschreven:</p></th>
-                        <th><p>Opgehaald:</p></th>
+                        <th style="min-width: 30%"><p>Medicijn</p></th>
+                        <th><p>Prijs</p></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -147,9 +144,9 @@ include("dbconnection.php");
                     try {
                         if(isset($_GET['search']) && $_GET['search'] != ""){
                             $searchCondition = "medicijn LIKE '%" . $_GET['search'] . "%' OR patid LIKE '%" . $_GET['search'] . "%' OR datumuitgeschreven='" . date("Y-m-d", strtotime($_GET['search'])) . "'";
-                            $query = $db->prepare("SELECT * FROM recepten WHERE " . $searchCondition);
+                            $query = $db->prepare("SELECT * FROM medicijnen WHERE " . $searchCondition);
                         }else{
-                            $query = $db->prepare("SELECT * FROM recepten");
+                            $query = $db->prepare("SELECT * FROM medicijnen");
                         }
                         $query->execute();
                         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -157,44 +154,15 @@ include("dbconnection.php");
                         foreach ($result as &$data) {
                             echo "<tr>";
                             echo "<td>";
-                            $querypat = $db->prepare("SELECT naam FROM patienten WHERE vernum = " . $data['patid']);
-
-                            if($querypat->execute()){
-                                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($resultpat as &$datapat) {
-                                    echo $datapat['naam'];
-                                }
-                            }
-
+                            echo $data['naam'];
                             echo "</td>";
                             echo "<td>";
-                            $querypat = $db->prepare("SELECT naam FROM medicijnen WHERE id = " . $data['medicijn']);
-
-                            if($querypat->execute()){
-                                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($resultpat as &$datapat) {
-                                    echo $datapat['naam'];
-                                }
-                            }
+                            echo "&euro; " . $data['prijs'];
                             echo "</td>";
+                            echo "<td><a href='infmed.php?id=" . $data['id'] . "&type=edit&master=med'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a>";
+                            echo "</td><td><a href='#?id=" . $data['id'] . "&type=del&master=med'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                             echo "<td>";
-                            echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
-                            echo "</td>";
-                            if($data['opgehaald'] == 0){
-                                echo "<td>";
-                                echo "<p class=\"text-danger font-weight-bold\">Niet opgehaald</p>";
-                                echo "</td>";
-                            }else{
-                                echo "<td>";
-                                echo "<p class=\"text-success font-weight-bold\">Opgehaald</p>";
-                                echo "</td>";
-                            }
-                            echo "<td><a href='infrec.php?id=" . $data['id'] . "&type=edit&master=rec'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a>";
-                            echo "</td><td><a href='dbedit.php?id=" . $data['id'] . "&type=del&master=rec'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
-                            echo "<td>";
-                            echo "<a href='infrec.php?id=" . $data['id'] . "&type=inf&master=rec'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
+                            echo "<a href='infmed.php?id=" . $data['id'] . "&type=inf&master=med'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
                             echo "</tr>";
                         };
                     } catch (PDOException $e) {

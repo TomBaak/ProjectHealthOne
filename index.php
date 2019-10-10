@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+
+session_start();
+
+if (isset($_GET["user"])) {
+    $_SESSION["user"] = $_GET["user"];
+}
+
+?>
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: Home</title>
+    <title>HealtOne</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -37,55 +46,97 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="recepten.php">Recepten</a>
+            <?php
+
+
+
+            if (isset($_SESSION['user'])) {
+                switch ($_SESSION['user']) {
+
+                    case "verz":
+
+                        echo "<li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a>
+            </li>";
+
+                    case "app":
+
+                    case "arts":
+
+                        echo "
+                        <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="patienten.php">Patienten</a>
+            <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"patienten.php\">Patienten</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact</a>
+            <li class=\"nav-item\">
+                <a class=\"nav-link\" href=\"contact.php\">Contact</a>
+            </li>
+                        ";
+
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+
+            ?>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item text-white">
+                Ingelogd als:
+                <?php
+
+                if(isset($_SESSION['user'])){
+                    switch ($_SESSION['user']){
+
+                        case "app": echo "Apotheker"; break;
+                        case "verz": echo "Verzekeraar"; break;
+                        case "arts": echo "Arts"; break;
+                        default: break;
+
+                    }
+                }
+
+                ?>
             </li>
         </ul>
     </div>
 </nav>
 
 <div class="container" style="margin-top: 2.5rem">
-    <div class="jumbotron" style="margin-bottom: 2rem;padding: 1.5rem 3rem">
-        <h1>Kies gebruiker</h1>
-        <p>Kies uw specialisatie</p>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-4"  style="margin-bottom: 2.5rem">
+        <h1 class='text-dark font-weight-bold display-4'>Kies gebruiker</h1>
+        <p class='text-dark display-4'>Kies uw specialisatie</p>
+    <div class="row" style="margin-top: 5%">
+        <div class="col-sm-4" style="margin-bottom: 2.5rem">
             <div class="card">
                 <img class="card-img-top" src="img/doc.jpg" alt="Card image" style="width:100%">
                 <div class="card-body">
-                    <h4 class="card-title">(Huis)Arts</h4>
-                    <a href="arts.php" class="btn btn-primary">Kies specialisme</a>
+                    <h4 class="card-title h4 font-weight-bold">(Huis)Arts</h4>
+                    <a href="index.php?user=arts" class="btn btn-outline-danger font-weight-bold">Kies specialisme</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4"  style="margin-bottom: 2.5rem">
+        <div class="col-sm-4" style="margin-bottom: 2.5rem">
             <div class="card">
                 <img class="card-img-top" src="img/pharmacist_23-2148174589.jpg" alt="Card image" style="width:100%">
                 <div class="card-body">
-                    <h4 class="card-title">Apotheek</h4>
-                    <a href="#" class="btn btn-primary">Kies specialisme</a>
+                    <h4 class="card-title h4 font-weight-bold">Apotheker</h4>
+                    <a href="index.php?user=app" class="btn btn-outline-danger font-weight-bold">Kies specialisme</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4"  style="margin-bottom: 2.5rem">
+        <div class="col-sm-4" style="margin-bottom: 2.5rem">
             <div class="card">
                 <img class="card-img-top" src="img/insurance.jpg" alt="Card image" style="width:100%">
                 <div class="card-body">
-                    <h4 class="card-title">Verzekeraar</h4>
-                    <a href="#" class="btn btn-primary">Kies specialisme</a>
+                    <h4 class="card-title h4 font-weight-bold">Verzekeraar</h4>
+                    <a href="index.php?user=verz" class="btn btn-outline-danger font-weight-bold">Kies specialisme</a>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-</body>
+    </body>
 </html>
