@@ -32,7 +32,7 @@ if (isset($_GET["user"])) {
 <div class="jumbotron text-center" style="margin-bottom:0; padding: 1rem 2.5rem">
     <div class="container">
         <img src="img/logo.png" style="width: 8%">
-        <p>Zilverenkruis</p>
+        <p>Zilverenkruis </p>
     </div>
 </div>
 
