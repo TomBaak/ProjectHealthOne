@@ -40,11 +40,13 @@ try {
                 } else {
                     $id = 0;
                 }
+                $medid = $data['medicijn'];
                 $startdatum = $data['startdatum'];
                 $datumuitgeschreven = $data['datumuitgeschreven'];
                 $duur = $data['receptduur'];
                 $dosering = $data['dosering'];
                 $opgehaald = $data['opgehaald'];
+                $herhaalrecept = $data['herhaalrecept'];
             };
         } else {
             echo "Error";
@@ -91,8 +93,33 @@ try {
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="recepten.php">Terug naar recepten</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
+                <?php
+
+                session_start();
+
+                if (isset($_SESSION['user'])) {
+                    switch ($_SESSION['user']) {
+                        case "verz":
+                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
+                        case "arts":
+                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                        case "app":
+                            echo "
+                        <li class=\"nav-item\"><a class=\"nav-link active\" href=\"recepten.php\">Recepten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
+
+                            break;
+
+                        default:
+                            break;
+
+                    }
+                }
+
+                ?>
             </ul>
         </div>
     </nav>
@@ -166,11 +193,11 @@ try {
                                     echo $medicijn;
                                     break;
                                 case "edit":
-                                    echo "<input id='inputMed' class=\"form-control\" type=\"text\" value='$medicijn' name=\"medicijn\" readonly>";
-                                    break;
                                 case "new":
                                     //search voor JQuery
                                     echo "<input class=\"form-control\" id=\"inputMed\" type=\"text\" placeholder=\"Zoek medicijn..\"><br>";
+
+
                                     //begin select met ID voor JQuery
                                     echo "<select id='medList' name=\"med\" class=\"custom-select\">
                                           <option selected class='text-muted'>Kies een medicijn</option>";
@@ -182,7 +209,15 @@ try {
                                         $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
                                         foreach ($result as &$data) {
-                                            echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
+                                            if ($_GET['type'] == 'new') {
+                                                echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
+                                            } elseif ($_GET['type'] == 'edit') {
+                                                if ($data['id'] == $medid) {
+                                                    echo "<option value='" . $data['id'] . "' selected>" . $data['naam'] . "</option>";
+                                                } else {
+                                                    echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
+                                                }
+                                            }
                                         }
                                     } else {
                                         echo "Error";
@@ -221,7 +256,7 @@ try {
                                     echo "<p style='margin: 0;' class='text-muted'>Per inname</p>";
                                     break;
                                 case "edit":
-                                    echo "<input min='1 class=\"form-control\" type=\"number\" value='$dosering' name=\"dosering\">";
+                                    echo "<input min='1' class=\"form-control\" type=\"number\" value='$dosering' name='dosering'>";
                                     echo "<p style='margin: 0;' class='text-muted'>hoeveelheid in mg per inname</p>";
                                     break;
                                 case "new":
@@ -297,6 +332,41 @@ try {
                         echo "</td></tr>";
                     };
                     ?>
+
+
+                    <?php
+                    echo "<tr><th>Herhaling mogelijk:</th><td>";
+                    switch ($_GET['type']) {
+                        case "edit":
+
+                            echo "<div class='custom-control custom-switch'>";
+
+                            if ($herhaalrecept == 1) {
+                                echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck2\" name=\"herhaling\" checked=\"checked\">";
+                            } else {
+                                echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck2\" name=\"herhaling\">";
+                            }
+                            echo "<label class=\"custom-control-label\" for=\"customCheck2\">Herhaling mogelijk</label>
+                                        </div>";
+                            break;
+
+                        case "new":
+                            echo "<div class=\"custom-control custom-switch\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" name=\"opgehaald\">
+                                        <label class=\"custom-control-label\" for=\"customCheck2\">Herhaling mogelijk</label>
+                                        </div>";
+                            break;
+                        case "inf":
+                            if ($herhaalrecept == 0) {
+                                echo "<p class=\"text-danger font-weight-bold\">Geen herhaling mogelijk</p>";
+                            } else {
+                                echo "<p class=\"text-success font-weight-bold\">Herhaling mogelijk</p>";
+                            }
+                            break;
+                        default:
+                    };
+                    echo "</td></tr>";
+                    ?>
                 </tbody>
             </table>
             <?php
@@ -325,18 +395,18 @@ try {
 </html>
 
 <script>
-    $(document).ready(function(){
-        $("#inputName").on("keyup", function() {
+    $(document).ready(function () {
+        $("#inputName").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#nameList *").filter(function() {
+            $("#nameList *").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     });
-    $(document).ready(function(){
-        $("#inputMed").on("keyup", function() {
+    $(document).ready(function () {
+        $("#inputMed").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#medList *").filter(function() {
+            $("#medList *").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });

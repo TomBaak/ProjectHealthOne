@@ -40,28 +40,15 @@
 
             if (isset($_SESSION['user'])) {
                 switch ($_SESSION['user']) {
-
                     case "verz":
-
-                        echo "<li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a>
-            </li>";
-
-                    case "app":
-
+                        echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
                     case "arts":
-
+                        echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                    case "app":
                         echo "
-                        <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
-            </li>
-            <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"patienten.php\">Patienten</a>
-            </li>
-            <li class=\"nav-item\">
-                <a class=\"nav-link active\" href=\"contact.php\">Contact</a>
-            </li>
-                        ";
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link active\" href=\"contact.php\">Contact</a></li>";
 
                         break;
 
@@ -117,13 +104,6 @@
             </dl>
         </div>
     </div>
-    <dl class="list-group">
-        <dt class="list-group-item">Email</dt>
-        <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
-        <dt class="list-group-item">Telefoon</dt>
-        <dd class="list-group-item">+31 612547858</dd>
-    </dl>
 </div>
-</body>
 </body>
 </html>

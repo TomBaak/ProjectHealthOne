@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: Recepten</title>
+    <title>HealtOne: Artsen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -63,12 +63,12 @@ include("dbconnection.php");
                 if (isset($_SESSION['user'])) {
                     switch ($_SESSION['user']) {
                         case "verz":
-                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
+                            echo "<li class=\"nav-item\"><a class=\"nav-link active\" href=\"artsen.php\">Artsen</a></li>";
                         case "arts":
                             echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
                         case "app":
                             echo "
-                        <li class=\"nav-item\"><a class=\"nav-link active\" href=\"recepten.php\">Recepten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
 
@@ -87,20 +87,13 @@ include("dbconnection.php");
                     Ingelogd als:
                     <?php
 
-                    if (isset($_SESSION['user'])) {
-                        switch ($_SESSION['user']) {
+                    if(isset($_SESSION['user'])){
+                        switch ($_SESSION['user']){
 
-                            case "app":
-                                echo "Apotheker";
-                                break;
-                            case "verz":
-                                echo "Verzekeraar";
-                                break;
-                            case "arts":
-                                echo "Arts";
-                                break;
-                            default:
-                                break;
+                            case "app": echo "Apotheker"; break;
+                            case "verz": echo "Verzekeraar"; break;
+                            case "arts": echo "Arts"; break;
+                            default: break;
 
                         }
                     }
@@ -117,32 +110,21 @@ include("dbconnection.php");
     <div class="container position-relative w-75" style="margin-bottom: 2%">
         <div class="row">
             <div class="col">
-                <h1 class='text-dark font-weight-bold display-4'>Recepten</h1>
-                <input style="margin-top: 3%" class="form-control" id="searchIn" type="text" placeholder="Recept zoeken">
+                <h1 class='text-dark font-weight-bold display-4'>Artsen</h1>
+                <input style="margin-top: 3%" class="form-control" id="searchIn" type="text" placeholder="Arts zoeken">
 
-                <?php
-
-                if (isset($_SESSION['user'])) {
-                    if ($_SESSION['user'] == 'arts') {
-                        echo "<a href=\"infrec.php?id=&type=new&master=rec\"><button style=\"width: 100%; margin-top: 
-                        2rem\" class=\"btn btn-success font-weight-bold\" type=\"button\">Nieuw recept</button></a>";
-                    }
-                }
-
-                ?>
-
+                <a href="infarts.php?id=&type=new"><button style="width: 100%; margin-top:
+                        2rem" class="btn btn-success font-weight-bold" type="button">Arts toevoegen</button></a>
 
                 <table class="table table-striped" style="margin-top: 2rem; margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th style="min-width: 20%"><p>Naam patient:</p></th>
-                        <th><p>Medicijn:</p></th>
-                        <th><p>Datum uitgeschreven:</p></th>
-                        <th><p>Opgehaald:</p></th>
+                        <th style="min-width: 20%"><p>Naam</p></th>
+                        <th><p>Arts ID:</p></th>
                         <?php
                         if (isset($_SESSION['user'])) {
                             if (isset($_SESSION['user'])) {
-                                if ($_SESSION['user'] == 'app') {
+                                if ($_SESSION['user'] == 'verz') {
                                     echo "<th></th>";
                                     echo "<th></th>";
                                 }
@@ -158,11 +140,11 @@ include("dbconnection.php");
 
 
                     try {
-                        if (isset($_GET['search']) && $_GET['search'] != "") {
+                        if(isset($_GET['search']) && $_GET['search'] != ""){
                             $searchCondition = "medicijn LIKE '%" . $_GET['search'] . "%' OR patid LIKE '%" . $_GET['search'] . "%' OR datumuitgeschreven='" . date("Y-m-d", strtotime($_GET['search'])) . "'";
-                            $query = $db->prepare("SELECT * FROM recepten WHERE " . $searchCondition);
-                        } else {
-                            $query = $db->prepare("SELECT * FROM recepten");
+                            $query = $db->prepare("SELECT * FROM medicijnen WHERE " . $searchCondition);
+                        }else{
+                            $query = $db->prepare("SELECT * FROM artsen");
                         }
                         $query->execute();
                         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -170,48 +152,22 @@ include("dbconnection.php");
                         foreach ($result as &$data) {
                             echo "<tr>";
                             echo "<td>";
-                            $querypat = $db->prepare("SELECT naam FROM patienten WHERE vernum = " . $data['patid']);
-
-                            if ($querypat->execute()) {
-                                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($resultpat as &$datapat) {
-                                    echo $datapat['naam'];
-                                }
-                            }
+                            echo $data['naam'];
                             echo "</td>";
                             echo "<td>";
-                            $querypat = $db->prepare("SELECT naam FROM medicijnen WHERE id = " . $data['medicijn']);
-
-                            if ($querypat->execute()) {
-                                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($resultpat as &$datapat) {
-                                    echo $datapat['naam'];
-                                }
-                            }
+                            echo $data['id'];
                             echo "</td>";
-                            echo "<td>";
-                            echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
-                            echo "</td>";
-                            if ($data['opgehaald'] == 0) {
-                                echo "<td>";
-                                echo "<p class=\"text-danger font-weight-bold\">Niet opgehaald</p>";
-                                echo "</td>";
-                            } else {
-                                echo "<td>";
-                                echo "<p class=\"text-success font-weight-bold\">Opgehaald</p>";
-                                echo "</td>";
-                            }
+
                             if (isset($_SESSION['user'])) {
-                                if ($_SESSION['user'] == 'app') {
-                                    echo "<td><a href='infrec.php?id=" . $data['id'] . "&type=edit&master=rec'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a></td>";
-                                    echo "<td><a href='dbedit.php?id=" . $data['id'] . "&type=del&master=rec'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                if (isset($_SESSION['user'])) {
+                                    if ($_SESSION['user'] == 'verz') {
+                                        echo "<td class='text-right'><a href='infarts.php?id=" . $data['id'] . "&type=edit&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a></td>";
+                                        echo "<td class='text-right'><a href='#?id=" . $data['id'] . "&type=del&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                    }
+                                    echo "<td class='text-right'><a href='infarts.php?id=" . $data['id'] . "&type=inf&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
                                 }
-                                echo "<td><a href='infrec.php?id=" . $data['id'] . "&type=inf&master=rec'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
-                                echo "</tr>";
                             }
-
+                            echo "</tr>";
                         };
                     } catch (PDOException $e) {
                         die("Error:" . $e->getMessage());
@@ -228,3 +184,4 @@ include("dbconnection.php");
 
 </body>
 </html>
+<?php

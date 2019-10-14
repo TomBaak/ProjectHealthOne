@@ -2,33 +2,33 @@
 <html lang="en">
 
 <?php
-    include("dbconnection.php");
-    try {
-        if ($_GET['type'] != "new") {
-            $query = $db->prepare("SELECT * FROM medicijnen WHERE id=" . $_GET['id']);
-            if ($query->execute()) {
-                $result = $query->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($result as &$data) {
-                    $naam = $data['naam'];
-                    $beschrijving = $data['beschrijving'];
-                    //maakt van de lijst met bijwerkingen een array door deze te splitsen bij elkse comma
-                    $bijwerkingen = explode(",", $data['bijwerkingen']);
-                    $bijwerkingenRaw = $data['bijwerkingen'];
-                    $prijs = $data['prijs'];
-                    $vergoed = $data['vergoed'];
-                };
-            } else {
-                echo "Error";
+include("dbconnection.php");
+try {
+    if ($_GET['type'] != "new") {
+        $query = $db->prepare("SELECT * FROM medicijnen WHERE id=" . $_GET['id']);
+        if ($query->execute()) {
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as &$data) {
+                $naam = $data['naam'];
+                $beschrijving = $data['beschrijving'];
+                //maakt van de lijst met bijwerkingen een array door deze te splitsen bij elkse comma
+                $bijwerkingen = explode(",", $data['bijwerkingen']);
+                $bijwerkingenRaw = $data['bijwerkingen'];
+                $prijs = $data['prijs'];
+                $vergoed = $data['vergoed'];
             };
+        } else {
+            echo "Error";
         };
-    } catch (PDOException $e) {
-        die("Error: " . $e->getMessage());
     };
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+};
 ?>
 
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: <?php echo $naam; ?></title>
+    <title>HealtOne: <?php if ($_GET['type'] != "new") {echo $naam;} else {echo "Nieuw medicijn";}; ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -39,7 +39,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"s
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" s
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/theme_HO.css">
@@ -73,8 +73,33 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="medicijnen.php">Terug naar medicijnen</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
+                <?php
+
+                session_start();
+
+                if (isset($_SESSION['user'])) {
+                    switch ($_SESSION['user']) {
+                        case "verz":
+                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
+                        case "arts":
+                            echo "<li class=\"nav-item\"><a class=\"nav-link active\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                        case "app":
+                            echo "
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
+
+                            break;
+
+                        default:
+                            break;
+
+                    }
+                }
+
+                ?>
             </ul>
         </div>
     </nav>
@@ -83,17 +108,17 @@
     <div class="container position-relative w-75" style="margin-bottom: 2%">
         <div class="container ">
             <?php
-                switch ($_GET['type']) {
-                    case 'inf':
-                        echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Medicijn Info</h1>";
-                        break;
-                    case 'edit':
-                        echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Medicijn Wijzigen</h1>";
-                        break;
-                    case 'new':
-                        echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuw medicijn</h1>";
-                        break;
-                };
+            switch ($_GET['type']) {
+                case 'inf':
+                    echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Medicijn Info</h1>";
+                    break;
+                case 'edit':
+                    echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Medicijn Wijzigen</h1>";
+                    break;
+                case 'new':
+                    echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuw medicijn</h1>";
+                    break;
+            };
             ?>
 
             <table class="table table-striped">
@@ -106,62 +131,62 @@
                         <td><?php
 
 
-                                switch ($_GET['type']) {
+                            switch ($_GET['type']) {
 
-                                    case "inf":
-                                    case "edit":
-                                        echo $naam;
-                                        break;
-                                    case "new":
+                                case "inf":
+                                case "edit":
+                                    echo $naam;
+                                    break;
+                                case "new":
+                                    echo "<input class='form-control' type='text' name='naam' placeholder='Medicijn naam'>";
+                                    break;
 
-                                        break;
-
-                                };
+                            };
 
                             ?></td>
                     </tr>
                     <tr>
                         <th>Beschrijving:</th>
                         <td>
-                                <?php
+                            <?php
 
 
-                                    switch ($_GET['type']) {
+                            switch ($_GET['type']) {
 
-                                        case "inf":
-                                            echo $beschrijving;
-                                            break;
-                                        case "edit":
-                                            echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                case "inf":
+                                    echo $beschrijving;
+                                    break;
+                                case "edit":
+                                    echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
                                             min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\">$beschrijving</textarea>
                                             <p style='margin-bottom: 0;margin-top: 0.5rem' class='text-muted'>Resterend aantal characters: 
                                             <span style='margin-top: 0.5rem' class=\"badge badge-warning\" id='charNum'>255/255</span></p>";
-                                            break;
-                                        case "new":
-                                            echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                    break;
+                                case "new":
+                                    echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
                                             min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\"></textarea>
                                             <p style='margin-bottom: 0;margin-top: 0.5rem' class='text-muted'>Resterend aantal characters: 
                                             <span style='margin-top: 0.5rem' class=\"badge badge-warning\" id='charNum'>255/255</span></p>";
-                                            break;
+                                    break;
 
 
-                                    };
+                            };
 
-                                ?>
+                            ?>
                         </td>
                     </tr>
                     <tr>
                         <th>Bijwerkingen:</th>
                         <ul class="list-group list-group-flush">
-                        <td><?php
+                            <td><?php
 
 
                                 switch ($_GET['type']) {
 
                                     case "inf":
                                         //maakt list van de array met bijwerkingen
-                                        for ($i = 0; $i < sizeof($bijwerkingen); $i++){
-                                            if($bijwerkingen[$i] != ""){
+                                        for ($i = 0; $i < sizeof($bijwerkingen); $i++) {
+                                            if ($bijwerkingen[$i] != "") {
                                                 echo "<li class='list-group-item'>- $bijwerkingen[$i]</li>";
                                             };
 
@@ -169,18 +194,18 @@
                                         break;
                                     case "edit":
                                         echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
-                                            min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\">$bijwerkingenRaw</textarea>
+                                            min-height: 5em;' placeholder=' Voorbeeld: hoofdpijn,misselijkhied,moeheid'>$bijwerkingenRaw</textarea>
                                             <p class='text-muted'><b CLASS='text-danger'>LET OP:</b> Plaats na elke bijwerking een comma voorbeeld: hoofdpijn,misselijkheid,moeheid</p>";
                                         break;
                                     case "new":
                                         echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
-                                            min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\"></textarea>
+                                            min-height: 5em' placeholder=' Voorbeeld: hoofdpijn,misselijkhied,moeheid'></textarea>
                                             <p class='text-muted'><b CLASS='text-danger'>LET OP:</b> Plaats na elke bijwerking een comma voorbeeld: hoofdpijn,misselijkheid,moeheid</p>";
                                         break;
 
                                 };
 
-                            ?></td>
+                                ?></td>
                         </ul>
                     </tr>
                     <tr>
@@ -188,15 +213,28 @@
                         <td><?php
 
 
-                                switch ($_GET['type']) {
+                            switch ($_GET['type']) {
 
-                                    case "inf":
-                                        echo "&euro; " . number_format($prijs, 2);
-                                        break;
-                                    case "edit":
-                                        echo "&euro; <input min='0.1' type='number' step='any' name='prijs' value='$prijs'>";
-                                        break;
-                                };
+                                case "inf":
+                                    echo "&euro; " . number_format($prijs, 2);
+                                    break;
+                                case "edit":
+                                    echo "<div class=\"input-group mb-3\">
+                                                <div class=\"input-group-prepend\">
+                                                  <span class=\"input-group-text\">&euro;</span>
+                                                </div>
+                                                <input class='form-control' min='0.1' type='number' step='any' name='prijs' value='$prijs'>
+                                              </div>";
+                                    break;
+                                case 'new':
+                                    echo "<div class=\"input-group mb-3\">
+                                                <div class=\"input-group-prepend\">
+                                                  <span class=\"input-group-text\">&euro;</span>
+                                                </div>
+                                                <input class='form-control' min='0.1' type='number' step='any' name='prijs' placeholder='Prijs'>
+                                              </div>";
+                                    break;
+                            };
 
                             ?></td>
                     </tr>
@@ -205,31 +243,37 @@
                         <td><?php
 
 
-                                switch ($_GET['type']) {
+                            switch ($_GET['type']) {
 
-                                    case "inf":
-                                        if($vergoed == 1){
-                                            echo "<p class=\"text-success font-weight-bold\">Wordt vergoed</p>";
-                                        }else{
-                                            echo "<p class=\"text-danger font-weight-bold\">Wordt niet vergoed</p>";
-                                        }
-                                        break;
+                                case "inf":
+                                    if ($vergoed == 1) {
+                                        echo "<p class=\"text-success font-weight-bold\">Wordt vergoed</p>";
+                                    } else {
+                                        echo "<p class=\"text-danger font-weight-bold\">Wordt niet vergoed</p>";
+                                    }
+                                    break;
 
-                                    case "edit":
-                                        if($vergoed == 1){
-                                            echo "<div class=\"custom-control custom-switch\">
+                                case "edit":
+                                    if ($vergoed == 1) {
+                                        echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"vergoed\" checked>
                                         <label class=\"custom-control-label\" for=\"customCheck\">Wordt vergoed</label>
                                         </div>";
-                                        }else{
-                                            echo "<div class=\"custom-control custom-switch\">
+                                    } else {
+                                        echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"vergoed\">
                                         <label class=\"custom-control-label\" for=\"customCheck\">Wordt vergoed</label>
                                         </div>";
-                                        }
-                                        break;
+                                    }
+                                    break;
+                                case 'new':
+                                    echo "<div class=\"custom-control custom-switch\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"vergoed\">
+                                        <label class=\"custom-control-label\" for=\"customCheck\">Wordt vergoed</label>
+                                        </div>";
+                                    break;
 
-                                };
+                            };
 
                             ?></td>
                     </tr>
@@ -237,16 +281,16 @@
             </table>
             <?php
 
-                switch ($_GET['type']) {
-                    case "edit":
-                        echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $naam\">";
-                        break;
-                    case "new":
-                        echo "<input class='d-none' type=\"date\" name=\"datumuitgeschreven\" value='" . date("Y-m-d") . "'></td>";
-                        echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Medicijn toevoegen\">";
-                        break;
-                }
-                echo '<input type="hidden" value="rec" class="custom-control-input" name="master">';
+            switch ($_GET['type']) {
+                case "edit":
+                    echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $naam\">";
+                    break;
+                case "new":
+                    echo "<input class='d-none' type=\"date\" name=\"datumuitgeschreven\" value='" . date("Y-m-d") . "'></td>";
+                    echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Medicijn toevoegen\">";
+                    break;
+            }
+            echo '<input type="hidden" value="rec" class="custom-control-input" name="master">';
             ?>
 
 

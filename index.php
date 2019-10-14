@@ -4,8 +4,17 @@
 
 session_start();
 
+if (isset($_GET["logout"])) {
+    session_destroy();
+    header("Location: index.php");
+}
+
 if (isset($_GET["user"])) {
     $_SESSION["user"] = $_GET["user"];
+
+}
+if (isset($_GET["artsid"])) {
+    $_SESSION["artsid"] = $_GET["artsid"];
 }
 
 ?>
@@ -44,36 +53,21 @@ if (isset($_GET["user"])) {
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">Home</a>
+                <a class="nav-link active" href="index.php">Home</a>
             </li>
             <?php
 
-
-
             if (isset($_SESSION['user'])) {
                 switch ($_SESSION['user']) {
-
                     case "verz":
-
-                        echo "<li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a>
-            </li>";
-
-                    case "app":
-
+                        echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
                     case "arts":
-
+                        echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                    case "app":
                         echo "
-                        <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
-            </li>
-            <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"patienten.php\">Patienten</a>
-            </li>
-            <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"contact.php\">Contact</a>
-            </li>
-                        ";
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
 
                         break;
 
@@ -86,12 +80,14 @@ if (isset($_GET["user"])) {
             ?>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item text-white">
-                Ingelogd als:
                 <?php
 
                 if(isset($_SESSION['user'])){
+
+                    echo '<li class="nav-item text-white ">Ingelogd als: ';
+
                     switch ($_SESSION['user']){
+
 
                         case "app": echo "Apotheker"; break;
                         case "verz": echo "Verzekeraar"; break;
@@ -99,10 +95,13 @@ if (isset($_GET["user"])) {
                         default: break;
 
                     }
+
+                    echo '</li>';
+
+                    echo "<li class=\"nav-item\">&nbsp;&nbsp;<a class='text-white font-weight-bold' href='index.php?logout=true'>Uitloggen</a></li>";
                 }
 
                 ?>
-            </li>
         </ul>
     </div>
 </nav>
@@ -116,7 +115,7 @@ if (isset($_GET["user"])) {
                 <img class="card-img-top" src="img/doc.jpg" alt="Card image" style="width:100%">
                 <div class="card-body">
                     <h4 class="card-title h4 font-weight-bold">(Huis)Arts</h4>
-                    <a href="index.php?user=arts" class="btn btn-outline-danger font-weight-bold">Kies specialisme</a>
+                    <a href="index.php?user=arts&artsid=1" class="btn btn-outline-danger font-weight-bold">Kies specialisme</a>
                 </div>
             </div>
         </div>

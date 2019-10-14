@@ -19,6 +19,16 @@
     <link rel="stylesheet" href="styles/overwrite.css">
     <link rel="stylesheet" href="styles/overwrite.css">
     <link rel="stylesheet" href="styles/theme_HO.css">
+    <script>
+        $(document).ready(function(){
+            $("#searchIn").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tableIn tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 </head>
 
 <?php
@@ -52,28 +62,15 @@ include("dbconnection.php");
 
                 if (isset($_SESSION['user'])) {
                     switch ($_SESSION['user']) {
-
                         case "verz":
-
-                            echo "<li class=\"nav-item\">
-                <a class=\"nav-link active\" href=\"medicijnen.php\">Medicijnen</a>
-            </li>";
-
-                        case "app":
-
+                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
                         case "arts":
-
+                            echo "<li class=\"nav-item\"><a class=\"nav-link active\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                        case "app":
                             echo "
-                        <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"recepten.php\">Recepten</a>
-            </li>
-            <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"patienten.php\">Patienten</a>
-            </li>
-            <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"contact.php\">Contact</a>
-            </li>
-                        ";
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
+                        <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
 
                             break;
 
@@ -114,31 +111,39 @@ include("dbconnection.php");
         <div class="row">
             <div class="col">
                 <h1 class='text-dark font-weight-bold display-4'>Medicijnen</h1>
-                <form style="margin-top: 5%;" method="get" action="medicijnen.php">
-                    <div class="input-group mb-3">
-                        <input name="search" class="form-control" placeholder="Zoeken">
-                        <div class="input-group-append">
-                            <button type="sumbit" class="btn btn-primary bg-success text-white" style="border: 0;">Zoek</button>
-                        </div>
-                    </div>
-                </form>
+                <input style="margin-top: 3%" class="form-control" id="searchIn" type="text" placeholder="Medicijn zoeken">
 
-                <a href="infmed.php?id=&type=new">
-                    <button style="width: 100%; margin-top: 2rem" class="btn btn-success font-weight-bold" type="button">Nieuw medicijn
-                    </button>
-                </a>
+                <?php
+
+                if (isset($_SESSION['user'])) {
+                    if ($_SESSION['user'] == 'verz') {
+                        echo "<a href=\"infmed.php?id=&type=new\"><button style=\"width: 100%; margin-top: 
+                        2rem\" class=\"btn btn-success font-weight-bold\" type=\"button\">Nieuw medicijn</button></a>";
+                    }
+                }
+
+                ?>
 
                 <table class="table table-striped" style="margin-top: 2rem; margin-bottom: 0">
                     <thead>
                     <tr>
-                        <th style="min-width: 30%"><p>Medicijn</p></th>
+                        <th style="min-width: 20%"><p>Medicijn</p></th>
                         <th><p>Prijs</p></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <?php
+                        if (isset($_SESSION['user'])) {
+                            if (isset($_SESSION['user'])) {
+                                if ($_SESSION['user'] == 'verz') {
+                                    echo "<th></th>";
+                                    echo "<th></th>";
+                                }
+                                echo "<th></th>";
+
+                            }
+                        }
+                        ?>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tableIn">
                     <?php
 
 
@@ -160,10 +165,16 @@ include("dbconnection.php");
                             echo "<td>";
                             echo "&euro; " . $data['prijs'];
                             echo "</td>";
-                            echo "<td><a href='infmed.php?id=" . $data['id'] . "&type=edit&master=med'><button type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a>";
-                            echo "</td><td><a href='#?id=" . $data['id'] . "&type=del&master=med'><button type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
-                            echo "<td>";
-                            echo "<a href='infmed.php?id=" . $data['id'] . "&type=inf&master=med'><button type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
+
+                            if (isset($_SESSION['user'])) {
+                                if (isset($_SESSION['user'])) {
+                                    if ($_SESSION['user'] == 'verz') {
+                                        echo "<td class='text-right'><a href='infmed.php?id=" . $data['id'] . "&type=edit&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a></td>";
+                                        echo "<td class='text-right'><a href='#?id=" . $data['id'] . "&type=del&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                    }
+                                    echo "<td class='text-right'><a href='infmed.php?id=" . $data['id'] . "&type=inf&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
+                                }
+                            }
                             echo "</tr>";
                         };
                     } catch (PDOException $e) {
