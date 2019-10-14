@@ -352,7 +352,7 @@ try {
 
                         case "new":
                             echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" name=\"opgehaald\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck2\" name=\"herhaling\">
                                         <label class=\"custom-control-label\" for=\"customCheck2\">Herhaling mogelijk</label>
                                         </div>";
                             break;
