@@ -4,6 +4,7 @@ include("dbconnection.php");
 
 try {
 
+
     if (isset($_POST['master'])) {
         $master = $_POST['master'];
     } elseif (isset($_GET['master'])) {
@@ -73,39 +74,48 @@ try {
 
                 if ($_POST['type'] == "new") {
                     $pat = $_POST['pat'];
-                    $med = $_POST['med'];
                 }
 
+                $med = $_POST['med'];
                 $dosering = $_POST['dosering'];
                 $duur = $_POST['duur'];
                 $startdatum = $_POST['startdatum'];
 
-                //zet de juiste waarde neer in verzekerd
+                //zet de juiste waarde neer in opgehaald
                 if (isset($_POST['opgehaald'])) {
-                    $verzekerd = 1;
+                    $opgehaald = 1;
                 } else {
-                    $verzekerd = 0;
+                    $opgehaald = 0;
                 }
 
+                if (isset($_POST['herhaling'])) {
+                    if ($_POST['herhaling'] == 'on') {
+                        $herhaling = 1;
+                    } else {
+                        $herhaling = 0;
+                    }
+                }
 
                 switch ($_POST['type']) {
 
                     case 'edit':
 
-                        $query = $db->prepare("UPDATE `recepten` SET `startdatum`=:startdatum,`receptduur`=:duur,`dosering`=:dosering,`opgehaald`=$verzekerd WHERE id=" . $_POST['id']);
+                        $query = $db->prepare("UPDATE `recepten` SET `medicijn`=:med,`startdatum`=:startdatum,`receptduur`=:duur,`dosering`=:dosering,`opgehaald`=$opgehaald WHERE id=" . $_POST['id']);
                         $query->bindParam("dosering", $dosering);
                         $query->bindParam("startdatum", $startdatum);
                         $query->bindParam("duur", $duur);
+                        $query->bindParam("med", $med);
 
                         break;
 
                     case 'new':
-                        $query = $db->prepare("INSERT INTO `recepten`(`patid`, `medicijn`, `startdatum`, `receptduur`, `dosering`) VALUES (:pat,:med,:startdatum,:duur,:dosering)");
+                        $query = $db->prepare("INSERT INTO `recepten`(`patid`, `medicijn`, `startdatum`, `receptduur`, `dosering`,`herhaalrecept`) VALUES (:pat,:med,:startdatum,:duur,:dosering,:herhaling)");
                         $query->bindParam("duur", $duur);
                         $query->bindParam("dosering", $dosering);
                         $query->bindParam("startdatum", $startdatum);
                         $query->bindParam("pat", $pat);
                         $query->bindParam("med", $med);
+                        $query->bindParam("herhaling", $herhaling);
                         break;
 
                     default:
@@ -130,7 +140,44 @@ try {
 
 
         //all db edits for the medicijnen table
-        case "rec":
+        case "med":
+            if (!isset($_GET['type'])) {
+
+                $naam = $_POST['naam'];
+                $desc = $_POST['beschrijving'];
+                $bijwerkingen = $_POST['bijwerkingen'];
+                $prijs = $_POST['prijs'];
+
+                if ($_POST['vergoed'] == 'on') {
+                    $vergoed = 1;
+                } else {
+                    $vergoed = 0;
+                };
+                switch ($_POST['type']) {
+
+                    case 'new':
+                        $query = $db->prepare('INSERT INTO `medicijnen`(`naam`, `beschrijving`, `bijwerkingen`, `vergoed`, `prijs`) VALUES (:naam,:beschrijving,:bijwerkingen,:vergoed,:prijs)');
+                        $query->bindParam("naam", $naam);
+                        $query->bindParam("beschrijving", $desc);
+                        $query->bindParam("bijwerkingen", $bijwerkingen);
+                        $query->bindParam("vergoed", $vergoed);
+                        $query->bindParam("prijs", $prijs);
+                        break;
+
+
+                };
+
+            } elseif ($_GET['id'] != NULL) {
+                $query = $db->prepare("DELETE FROM `medicijnen` WHERE id=" . $_GET['id']);
+            }
+
+            if ($query->execute()) {
+                echo "Patient toegevoegd ";
+                header("Location: medicijnen.php");
+            } else {
+                echo "<h1>Er is een fout opgetreden</h1>";
+                echo "<a href='index.php'>Ga terug</a>";
+            };
 
             break;
 

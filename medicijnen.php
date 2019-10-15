@@ -170,7 +170,7 @@ include("dbconnection.php");
                                 if (isset($_SESSION['user'])) {
                                     if ($_SESSION['user'] == 'verz') {
                                         echo "<td class='text-right'><a href='infmed.php?id=" . $data['id'] . "&type=edit&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-warning text-white\">Wijzig</button></a></td>";
-                                        echo "<td class='text-right'><a href='#?id=" . $data['id'] . "&type=del&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
+                                        echo "<td class='text-right'><a href='dbedit.php?id=" . $data['id'] . "&type=del&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-danger text-white\" >Verwijder</button></a></td>";
                                     }
                                     echo "<td class='text-right'><a href='infmed.php?id=" . $data['id'] . "&type=inf&master=med'><button style='margin-right: 20%;' type=\"button\" class=\"btn bg-dark text-white\">Bekijk</button></a></td>";
                                 }

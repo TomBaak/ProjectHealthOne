@@ -28,7 +28,11 @@ try {
 
 <head>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>HealtOne: <?php if ($_GET['type'] != "new") {echo $naam;} else {echo "Nieuw medicijn";}; ?></title>
+    <title>HealtOne: <?php if ($_GET['type'] != "new") {
+            echo $naam;
+        } else {
+            echo "Nieuw medicijn";
+        }; ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -125,7 +129,7 @@ try {
 
                 <tbody>
 
-                <form method="post" action="dbedit.php" id="recform">
+                <form method="post" action="dbedit.php">
                     <tr>
                         <th style="width: 20%">Medicijn naam:</th>
                         <td><?php
@@ -157,13 +161,13 @@ try {
                                     echo $beschrijving;
                                     break;
                                 case "edit":
-                                    echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                    echo "<textarea class='form-control' name='beschrijving' style='width: 100%;max-height: 15em;
                                             min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\">$beschrijving</textarea>
                                             <p style='margin-bottom: 0;margin-top: 0.5rem' class='text-muted'>Resterend aantal characters: 
                                             <span style='margin-top: 0.5rem' class=\"badge badge-warning\" id='charNum'>255/255</span></p>";
                                     break;
                                 case "new":
-                                    echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
+                                    echo "<textarea class='form-control' name='beschrijving' style='width: 100%;max-height: 15em;
                                             min-height: 5em;' onloadstart=\"countChar(this)\" onkeyup=\"countChar(this)\"></textarea>
                                             <p style='margin-bottom: 0;margin-top: 0.5rem' class='text-muted'>Resterend aantal characters: 
                                             <span style='margin-top: 0.5rem' class=\"badge badge-warning\" id='charNum'>255/255</span></p>";
@@ -177,36 +181,51 @@ try {
                     </tr>
                     <tr>
                         <th>Bijwerkingen:</th>
-                        <ul class="list-group list-group-flush">
-                            <td><?php
+
+                        <td><?php
 
 
-                                switch ($_GET['type']) {
+                            switch ($_GET['type']) {
 
-                                    case "inf":
-                                        //maakt list van de array met bijwerkingen
-                                        for ($i = 0; $i < sizeof($bijwerkingen); $i++) {
-                                            if ($bijwerkingen[$i] != "") {
-                                                echo "<li class='list-group-item'>- $bijwerkingen[$i]</li>";
-                                            };
+                                case "inf":
+                                    //maakt list van de array met bijwerkingen
+                                    for ($i = 0; $i < sizeof($bijwerkingen); $i++) {
+                                        if ($bijwerkingen[$i] != "") {
+                                            echo "<li class='list-group-item'>- $bijwerkingen[$i]</li>";
+                                        };
 
-                                        }
-                                        break;
-                                    case "edit":
-                                        echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
-                                            min-height: 5em;' placeholder=' Voorbeeld: hoofdpijn,misselijkhied,moeheid'>$bijwerkingenRaw</textarea>
-                                            <p class='text-muted'><b CLASS='text-danger'>LET OP:</b> Plaats na elke bijwerking een comma voorbeeld: hoofdpijn,misselijkheid,moeheid</p>";
-                                        break;
-                                    case "new":
-                                        echo "<textarea name='beschrijving' style='width: 100%;max-height: 15em;
-                                            min-height: 5em' placeholder=' Voorbeeld: hoofdpijn,misselijkhied,moeheid'></textarea>
-                                            <p class='text-muted'><b CLASS='text-danger'>LET OP:</b> Plaats na elke bijwerking een comma voorbeeld: hoofdpijn,misselijkheid,moeheid</p>";
-                                        break;
+                                    }
+                                    break;
+                                case "new":
+                                    echo "<div id='bijwLijst'>";
+                                    echo "</div>";
+                                    echo "<input style='margin-top: 2%' class='form-control' type='text' placeholder='Bijwerking' id='bijwInput'>";
+                                    echo "<p style='margin-top: 2%; cursor: pointer' class='btn btn-outline-success' onclick='addToList()'>Voeg bijwerking toe</p>";
+                                    echo "<input type='text' name='bijwerkingen' id='bijwDb' class='d-none'>";
+                                    break;
 
-                                };
+                            };
 
-                                ?></td>
-                        </ul>
+                            ?></td>
+                        <script>
+                            let bijwerking = [];
+
+                            function addToList() {
+                                let bijwDb = document.getElementById('bijwDb');
+                                let bijwLijst = document.getElementById('bijwLijst');
+                                let input = document.getElementById('bijwInput');
+                                let li = document.createElement('li');
+                                if (input != "") {
+                                    li.className = 'list-group-item';
+                                    li.innerHTML = "- " + input.value;
+                                    bijwLijst.appendChild(li);
+                                    bijwerking.push(input);
+                                    bijwDb.value = bijwerking.toString(',');
+                                    input.value = '';
+                                }
+                            };
+
+                        </script>
                     </tr>
                     <tr>
                         <th>Prijs:</th>
@@ -290,7 +309,8 @@ try {
                     echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Medicijn toevoegen\">";
                     break;
             }
-            echo '<input type="hidden" value="rec" class="custom-control-input" name="master">';
+            echo "<input type='hidden' value='". $_GET['type'] ."'class='custom-control-input' name='type'>";
+            echo '<input type="hidden" value="med" class="custom-control-input" name="master">';
             ?>
 
 

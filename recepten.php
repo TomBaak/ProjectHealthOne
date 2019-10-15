@@ -158,12 +158,7 @@ include("dbconnection.php");
 
 
                     try {
-                        if (isset($_GET['search']) && $_GET['search'] != "") {
-                            $searchCondition = "medicijn LIKE '%" . $_GET['search'] . "%' OR patid LIKE '%" . $_GET['search'] . "%' OR datumuitgeschreven='" . date("Y-m-d", strtotime($_GET['search'])) . "'";
-                            $query = $db->prepare("SELECT * FROM recepten WHERE " . $searchCondition);
-                        } else {
-                            $query = $db->prepare("SELECT * FROM recepten");
-                        }
+                        $query = $db->prepare("SELECT * FROM recepten");
                         $query->execute();
                         $result = $query->fetchAll(PDO::FETCH_ASSOC);
 

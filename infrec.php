@@ -9,6 +9,7 @@ try {
         if ($query->execute()) {
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
             foreach ($result as &$data) {
+
                 //haalt de pat naam uit de patient tabel met de id uit de recept row
                 $querypat = $db->prepare("SELECT naam FROM patienten WHERE vernum = " . $data['patid']);
 
@@ -274,7 +275,7 @@ try {
                                     echo date("d-m-Y", strtotime($data['startdatum']));
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"date\" value='$startdatum' name=\"startdatum\">";
+                                    echo "<input class=\"form-control\" type=\"date\" value='$startdatum' name=\"startdatum\" readonly>";
                                     break;
                                 case "new":
                                     echo "<input class=\"form-control\" type=\"date\" name=\"startdatum\">";
@@ -302,23 +303,17 @@ try {
                         echo "<tr><th>Opgehaald:</th><td>";
                         switch ($_GET['type']) {
                             case "edit":
-
-                                echo "<div class='custom-control custom-switch'>";
-
                                 if ($opgehaald == 1) {
-                                    echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\" checked=\"checked\">";
-                                } else {
-                                    echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck\" name=\"opgehaald\">";
-                                }
-                                echo "<label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
-                                        </div>";
-                                break;
-
-                            case "new":
-                                echo "<div class=\"custom-control custom-switch\">
-                                        <input type=\"checkbox\" class=\"custom-control-input\" name=\"opgehaald\">
+                                    echo "<div class=\"custom-control custom-switch\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"opgehaald\" checked>
                                         <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
                                         </div>";
+                                } else {
+                                    echo "<div class=\"custom-control custom-switch\">
+                                        <input type=\"checkbox\" class=\"custom-control-input\" id='customCheck' name=\"opgehaald\">
+                                        <label class=\"custom-control-label\" for=\"customCheck\">Opgehaald</label>
+                                        </div>";
+                                }
                                 break;
                             case "inf":
                                 if ($opgehaald != 1) {
@@ -337,30 +332,18 @@ try {
                     <?php
                     echo "<tr><th>Herhaling mogelijk:</th><td>";
                     switch ($_GET['type']) {
-                        case "edit":
-
-                            echo "<div class='custom-control custom-switch'>";
-
-                            if ($herhaalrecept == 1) {
-                                echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck2\" name=\"herhaling\" checked=\"checked\">";
-                            } else {
-                                echo "<input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck2\" name=\"herhaling\">";
-                            }
-                            echo "<label class=\"custom-control-label\" for=\"customCheck2\">Herhaling mogelijk</label>
-                                        </div>";
-                            break;
-
                         case "new":
                             echo "<div class=\"custom-control custom-switch\">
                                         <input type=\"checkbox\" class=\"custom-control-input\" id=\"customCheck2\" name=\"herhaling\">
                                         <label class=\"custom-control-label\" for=\"customCheck2\">Herhaling mogelijk</label>
                                         </div>";
                             break;
+                        case "edit":
                         case "inf":
-                            if ($herhaalrecept == 0) {
-                                echo "<p class=\"text-danger font-weight-bold\">Geen herhaling mogelijk</p>";
-                            } else {
+                            if ($herhaalrecept == 1) {
                                 echo "<p class=\"text-success font-weight-bold\">Herhaling mogelijk</p>";
+                            } else {
+                                echo "<p class=\"text-danger font-weight-bold\">Geen herhaling mogelijk</p>";
                             }
                             break;
                         default:
