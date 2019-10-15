@@ -119,13 +119,6 @@
             </dl>
         </div>
     </div>
-    <dl class="list-group">
-        <dt class="list-group-item">Email</dt>
-        <dd class="list-group-item"><a href="mailto:tom@baak.org">tom@baak.org</a></dd>
-        <dt class="list-group-item">Telefoon</dt>
-        <dd class="list-group-item">+31 612547858</dd>
-    </dl>
 </div>
-</body>
 </body>
 </html>
