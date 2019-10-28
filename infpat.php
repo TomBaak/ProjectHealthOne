@@ -126,11 +126,11 @@ try {
             };
             ?>
 
+            <form method="post" action="dbedit.php">
+
             <table class="table table-striped">
 
                 <tbody>
-
-                <form method="post" action="dbedit.php">
 
                     <tr>
                         <th>Naam:</th>
@@ -172,8 +172,8 @@ try {
                         echo "<td>";
                         echo $vernum;
                         echo "</td></tr>";
+                        echo "<input class=\"d-none\" type='number' name=\"vernum\" value='" . $_GET['id'] . "'>";
                     };
-                    echo "<input class=\"d-none\" type='number' name=\"vernum\" value='" . $_GET['id'] . "'>";
                     ?>
                     <th>Arts:</th>
                     <td><?php
@@ -185,7 +185,7 @@ try {
 
 
                                 //begin select met ID voor JQuery
-                                echo "<select id='nameList' name=\"med\" class=\"custom-select\">
+                                echo "<select id='nameList' name=\"arts\" class=\"custom-select\">
                                           <option selected class='text-muted'>Kies een arts</option>";
 
                                 //haalt alle naam namen van patienten uit db
@@ -240,13 +240,13 @@ try {
                         <td><?php
                             switch ($_GET['type']) {
                                 case "new":
-                                    echo "<input class='form-control'  placeholder='Telefoon nummer' name='telnum' type='tel'>";
+                                    echo "<input class='form-control'  placeholder='Telefoon nummer' name='telnum' type='text'>";
                                     break;
                                 case "inf":
                                     echo $telnum;
                                     break;
                                 case "edit":
-                                    echo "<input class='form-control'  placeholder='Telefoon nummer' name='telnum' type='tel' value='$telnum'>";
+                                    echo "<input class='form-control'  placeholder='Telefoon nummer' name='telnum' type='text' value='$telnum'>";
                                     break;
                                     break;
                             }
@@ -268,8 +268,9 @@ try {
                             }
                             ?></td>
                     </tr>
-                </form>
                 </tbody>
+                </form>
+
             </table>
 
             <!--recepten van patient-->

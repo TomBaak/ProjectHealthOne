@@ -89,13 +89,13 @@ try {
             <?php
             switch ($_GET['type']) {
                 case 'inf':
-                    echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Patient Info</h1>";
+                    echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Arts Info</h1>";
                     break;
                 case 'edit':
-                    echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Patient Wijzigen</h1>";
+                    echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Arts Wijzigen</h1>";
                     break;
                 case 'new':
-                    echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuwe Patient</h1>";
+                    echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuwe arts</h1>";
                     break;
             };
             ?>
@@ -114,13 +114,12 @@ try {
                                     echo $name;
                                     break;
                                 case "edit":
-                                    echo "<input class=\"form-control\" type=\"text\" value=\"$name\" name=\"name\">";
+                                    echo "<input class=\"form-control\" type=\"text\" value=\"$name\" name=\"naam\">";
                                     break;
                                 case "new":
-                                    echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
+                                    echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"naam\">";
                                     break;
                             }
-                            echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
                             ?></td>
                     </tr>
                     <?php
@@ -136,72 +135,15 @@ try {
                 </tbody>
             </table>
 
-            <table class="table table - striped">
-
-                <?php
-                if ($_GET['type'] == 'inf') {
-                    $query = $db->prepare("SELECT * FROM recepten WHERE patid=" . $_GET['id']);
-                    if ($query->execute()) {
-                        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-                        if (sizeof($result) != 0) {
-                            echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Recepten</h1>";
-                            echo "<thead>
-                                    <tr>
-                                        <th><p>Medicijn:</p></th>
-                                        <th><p>Datum uitgeschreven:</p></th>
-                                         <th><p>Opgehaald:</p></th>
-                                    </tr>
-                    </thead>
-                     <tbody>";
-                        }
-                        foreach ($result as &$data) {
-                            echo "<tr>";
-                            echo "<td>";
-                            $querypat = $db->prepare("SELECT naam FROM medicijnen WHERE id = " . $data['medicijn']);
-
-                            if ($querypat->execute()) {
-                                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($resultpat as &$datapat) {
-                                    echo $datapat['naam'];
-                                }
-                            } else {
-                                echo "Error";
-                            }
-                            echo "</td>";
-                            echo "<td>";
-                            echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
-                            echo "</td>";
-                            if ($data['opgehaald'] == 0) {
-                                echo "<td>";
-                                echo "<p class=\"text-danger font-weight-bold\">Niet opgehaald</p>";
-                                echo "</td>";
-                            } else {
-                                echo "<td>";
-                                echo "<p class=\"text-success font-weight-bold\">Opgehaald</p>";
-                                echo "</td>";
-                            }
-                        }
-                    } else {
-                        echo "Er is een fout opgetreden";
-                    }
-                }
-                ?>
-
-                </tbody>
-            </table>
-
             <?php
+            echo "<input type='hidden' value='". $_GET['type'] ."'class='custom-control-input' name='type'>";
+            echo '<input type="hidden" value="arts" class="custom-control-input" name="master">';
             switch ($_GET['type']) {
                 case "edit":
-                    echo "<input type='hidden' name='master' value='pat'>";
-                    echo "<input type='hidden' name='type' value='edit'>";
                     echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $name\">";
                     break;
                 case "new":
-                    echo "<input type='hidden' name='master' value='pat'>";
-                    echo "<input type='hidden' name='type' value='new'>";
-                    echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
+                    echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Arts Toevoegen\">";
                     break;
             }
             ?>

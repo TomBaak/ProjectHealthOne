@@ -21,19 +21,30 @@ try {
                 $name = $_POST['name'];
                 $dob = $_POST['dob'];
                 $vernum = $_POST['vernum'];
+                $telnum = $_POST['telnum'];
+                $email = $_POST['email'];
+                $adres = $_POST['adres'];
+                $arts = $_POST['arts'];
+
                 if ($_POST['verzekerd'] == "on") {
                     $verzekerd = 1;
                 } else {
                     $verzekerd = 0;
                 }
+
             }
             switch ($_POST['type']) {
 
                 case "new":
-                    $query = $db->prepare("INSERT INTO `patienten`(`naam`, `dob`, `vernum`, `verzekerd`) VALUES (:naam,:dob,NULL,:verzekerd)");
+                    $query = $db->prepare("INSERT INTO `patienten`(`naam`, `dob`, `vernum`, `verzekerd`, `telefoon`, `email`, `artsid`, `adres`) 
+                        VALUES (:naam,:dob,NULL,:verzekerd, :telnum, :email, :arts, :adres)");
                     $query->bindParam("naam", $name);
                     $query->bindParam("dob", $dob);
                     $query->bindParam("verzekerd", $verzekerd);
+                    $query->bindParam("telnum", $telnum);
+                    $query->bindParam("email", $email);
+                    $query->bindParam("arts", $arts);
+                    $query->bindParam("adres", $adres);
                     break;
 
                 case "edit":
@@ -153,6 +164,7 @@ try {
                 } else {
                     $vergoed = 0;
                 };
+
                 switch ($_POST['type']) {
 
                     case 'new':
@@ -174,6 +186,36 @@ try {
             if ($query->execute()) {
                 echo "Patient toegevoegd ";
                 header("Location: medicijnen.php");
+            } else {
+                echo "<h1>Er is een fout opgetreden</h1>";
+                echo "<a href='index.php'>Ga terug</a>";
+            };
+
+            break;
+
+            //all db edits for the artsen table
+        case "arts":
+            if (!isset($_GET['type'])) {
+
+                $naam = $_POST['naam'];
+
+                switch ($_POST['type']) {
+
+                    case 'new':
+                        $query = $db->prepare('INSERT INTO `artsen`(`naam`) VALUES (:naam)');
+                        $query->bindParam("naam", $naam);
+                        break;
+
+
+                };
+
+            } elseif ($_GET['id'] != NULL) {
+                $query = $db->prepare("DELETE FROM `artsen` WHERE id=" . $_GET['id']);
+            }
+
+            if ($query->execute()) {
+                echo "Patient toegevoegd ";
+                header("Location: artsen.php");
             } else {
                 echo "<h1>Er is een fout opgetreden</h1>";
                 echo "<a href='index.php'>Ga terug</a>";
