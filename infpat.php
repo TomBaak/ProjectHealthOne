@@ -2,34 +2,34 @@
 <html lang="en">
 
 <?php
-include("dbconnection.php");
-try {
-    $query = $db->prepare("SELECT * FROM patienten WHERE vernum=" . $_GET['id']);
-    $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($result as &$data) {
-        $name = $data['naam'];
-        $dobraw = $data['dob'];
-        $dob = date("d-m-Y", strtotime($data['dob']));
-        $vernum = $data['vernum'];
-        $email = $data['email'];
-        $telnum = $data['telefoon'];
-        $artsid = $data['artsid'];
-        $adres = $data['adres'];
-        //haalt arts naam uit artsen in db
-        $querypat = $db->prepare("SELECT naam FROM artsen WHERE id = " . $data['artsid']);
+    include("dbconnection.php");
+    try {
+        $query = $db->prepare("SELECT * FROM patienten WHERE vernum=" . $_GET['id']);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as &$data) {
+            $name = $data['naam'];
+            $dobraw = $data['dob'];
+            $dob = date("d-m-Y", strtotime($data['dob']));
+            $vernum = $data['vernum'];
+            $email = $data['email'];
+            $telnum = $data['telefoon'];
+            $artsid = $data['artsid'];
+            $adres = $data['adres'];
+            //haalt arts naam uit artsen in db
+            $querypat = $db->prepare("SELECT naam FROM artsen WHERE id = " . $data['artsid']);
 
-        if ($querypat->execute()) {
-            $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
+            if ($querypat->execute()) {
+                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($resultpat as &$datapat) {
-                $arts = $datapat['naam'];
+                foreach ($resultpat as &$datapat) {
+                    $arts = $datapat['naam'];
+                }
             }
         }
-    }
-} catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
-};
+    } catch (PDOException $e) {
+        die("Error: " . $e->getMessage());
+    };
 ?>
 
 <head>
@@ -82,158 +82,151 @@ try {
                 </li>
                 <?php
 
-                session_start();
+                    session_start();
 
-                if (isset($_SESSION['user'])) {
-                    switch ($_SESSION['user']) {
-                        case "verz":
-                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
-                        case "arts":
-                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
-                        case "app":
-                            echo "
+                    if (isset($_SESSION['user'])) {
+                        switch ($_SESSION['user']) {
+                            case "verz":
+                                echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"artsen.php\">Artsen</a></li>";
+                            case "arts":
+                                echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                            case "app":
+                                echo "
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
                         <li class=\"nav-item\"><a class=\"nav-link active\" href=\"patienten.php\">Patienten</a></li>
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
 
-                            break;
+                                break;
 
-                        default:
-                            break;
+                            default:
+                                break;
 
+                        }
                     }
-                }
 
                 ?>
             </ul>
         </div>
     </nav>
 </div>
-<div class="container bg-transparent position-absolute" style="top: 27%; max-width: 100%;">
+<div class="container bg-transparent position-absolute" style="top: 23%; max-width: 100%;">
     <div class="container position-relative w-75" style="margin-bottom: 2%">
         <div class="container ">
             <?php
-            switch ($_GET['type']) {
-                case 'inf':
-                    echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Patient Info</h1>";
-                    break;
-                case 'edit':
-                    echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Patient Wijzigen</h1>";
-                    break;
-                case 'new':
-                    echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuwe Patient</h1>";
-                    break;
-            };
+                switch ($_GET['type']) {
+                    case 'inf':
+                        echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Patient Info</h1>";
+                        break;
+                    case 'edit':
+                        echo "<h1 style='margin: 3rem 0' class='text-warning font-weight-bold'>Patient Wijzigen</h1>";
+                        break;
+                    case 'new':
+                        echo "<h1 style='margin: 3rem 0' class='text-success font-weight-bold'>Nieuwe Patient</h1>";
+                        break;
+                };
             ?>
-
             <form method="post" action="dbedit.php">
-
-            <table class="table table-striped">
-
-                <tbody>
-
+                <table class="table table-striped">
+                    <tbody>
                     <tr>
                         <th>Naam:</th>
                         <td><?php
-                            switch ($_GET['type']) {
-                                case "inf":
-                                    echo $name;
-                                    break;
-                                case "edit":
-                                    echo "<input class=\"form-control\" type=\"text\" value=\"$name\" name=\"name\">";
-                                    break;
-                                case "new":
-                                    echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
-                                    break;
-                            }
-                            echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
+                                switch ($_GET['type']) {
+                                    case "inf":
+                                        echo $name;
+                                        break;
+                                    case "edit":
+                                        echo "<input class=\"form-control\" type=\"text\" value=\"$name\" name=\"name\">";
+                                        break;
+                                    case "new":
+                                        echo "<input class=\"form-control\" type=\"text\" placeholder='Naam' name=\"name\">";
+                                        break;
+                                }
+                                echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
                             ?></td>
                     </tr>
                     <tr>
                         <th>Geboorte Datum:</th>
                         <td><?php
-                            switch ($_GET['type']) {
-                                case "inf":
-                                    echo $dob;
-                                    break;
-                                case "edit":
-                                    echo "<input class=\"form-control\" type=\"date\" value='$dobraw' name=\"dob\">";
-                                    break;
-                                case "new":
-                                    echo "<input class=\"form-control\" type=\"date\" name=\"dob\">";
-                                    break;
-                            }
+                                switch ($_GET['type']) {
+                                    case "inf":
+                                        echo $dob;
+                                        break;
+                                    case "edit":
+                                        echo "<input class=\"form-control\" type=\"date\" value='$dobraw' name=\"dob\">";
+                                        break;
+                                    case "new":
+                                        echo "<input class=\"form-control\" type=\"date\" name=\"dob\">";
+                                        break;
+                                }
                             ?></td>
                     </tr>
                     <?php
-                    if ($_GET['type'] != "new") {
-                        echo "<tr>";
-                        echo "<th>Verzekerings nummer:</th>";
-                        echo "<td>";
-                        echo $vernum;
-                        echo "</td></tr>";
-                        echo "<input class=\"d-none\" type='number' name=\"vernum\" value='" . $_GET['id'] . "'>";
-                    };
+                        if ($_GET['type'] != "new") {
+                            echo "<tr>";
+                            echo "<th>Verzekerings nummer:</th>";
+                            echo "<td>";
+                            echo "<input class=\"form-control\" type='number' name=\"vernum\" value='" . $_GET['id'] . "' readonly>";
+                            echo "</td></tr>";
+                        };
                     ?>
                     <th>Arts:</th>
                     <td><?php
-                        switch ($_GET['type']) {
-                            case "edit":
-                            case "new":
-                                //search voor JQuery
-                                echo "<input class=\"form-control\" id=\"inputList\" type=\"text\" placeholder=\"Zoek arts..\"><br>";
-
-
-                                //begin select met ID voor JQuery
-                                echo "<select id='nameList' name=\"arts\" class=\"custom-select\">
+                            switch ($_GET['type']) {
+                                case "edit":
+                                case "new":
+                                    //search voor JQuery
+                                    echo "<input class=\"form-control\" id=\"inputList\" type=\"text\" placeholder=\"Zoek arts..\"><br>";
+                                    //begin select met ID voor JQuery
+                                    echo "<select id='nameList' name=\"artsid\" class=\"custom-select\">
                                           <option selected class='text-muted'>Kies een arts</option>";
 
-                                //haalt alle naam namen van patienten uit db
-                                $query = $db->prepare("SELECT * FROM artsen");
+                                    //haalt alle naam namen van patienten uit db
+                                    $query = $db->prepare("SELECT * FROM artsen");
 
-                                if ($query->execute()) {
-                                    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                                    if ($query->execute()) {
+                                        $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-                                    foreach ($result as &$data) {
-                                        if($_GET['type'] == 'new'){
-                                            echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
-                                        }elseif($_GET['type'] == 'edit'){
-                                            if($data['id'] == $artsid){
-                                                echo "<option value='" . $data['id'] . "' selected>" . $data['naam'] . "</option>";
-                                            }else{
+                                        foreach ($result as &$data) {
+                                            if ($_GET['type'] == 'new') {
                                                 echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
+                                            } elseif ($_GET['type'] == 'edit') {
+                                                if ($data['id'] == $artsid) {
+                                                    echo "<option value='" . $data['id'] . "' selected>" . $data['naam'] . "</option>";
+                                                } else {
+                                                    echo "<option value='" . $data['id'] . "'>" . $data['naam'] . "</option>";
+                                                }
                                             }
                                         }
+                                    } else {
+                                        echo "Error";
                                     }
-                                } else {
-                                    echo "Error";
-                                }
 
-                                //einde select
-                                echo "</select>";
-                                break;
-                            case 'inf':
-                                echo $arts;
-                                break;
-                        }
-                        echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
+                                    //einde select
+                                    echo "</select>";
+                                    break;
+                                case 'inf':
+                                    echo $arts;
+                                    break;
+                            }
+                            echo "<input class=\"d-none\" type=\"text\" name=\"type\" value='" . $_GET['type'] . "'>";
                         ?></td>
                     </tr>
                     <tr>
-                    <th>Email:</th>
-                    <td><?php
-                        switch ($_GET['type']) {
-                            case "new":
-                                echo "<input class='form-control' placeholder='Email' name='email' type='email'>";
-                                break;
-                            case "inf":
-                                echo $email;
-                                break;
-                            case "edit":
-                                echo "<input class='form-control' placeholder='Email' name='email' type='email' value='$email'>";
-                                break;
-                        }
-                        ?></td>
+                        <th>Email:</th>
+                        <td><?php
+                                switch ($_GET['type']) {
+                                    case "new":
+                                        echo "<input class='form-control' placeholder='Email' name='email' type='email'>";
+                                        break;
+                                    case "inf":
+                                        echo $email;
+                                        break;
+                                    case "edit":
+                                        echo "<input class='form-control' placeholder='Email' name='email' type='email' value='$email'>";
+                                        break;
+                                }
+                            ?></td>
                     </tr>
                     <tr>
                         <th>Telefoon nummer:</th>
@@ -255,35 +248,51 @@ try {
                     <tr>
                         <th>Adres:</th>
                         <td><?php
-                            switch ($_GET['type']) {
-                                case "inf":
-                                    echo $adres;
-                                    break;
-                                case "edit":
-                                    echo "<input class=\"form-control\" type=\"text\" placeholder='Adres' value=\"$adres\" name=\"adres\">";
-                                    break;
-                                case "new":
-                                    echo "<input class=\"form-control\" type=\"text\" placeholder='Adres' name=\"adres\">";
-                                    break;
-                            }
+                                switch ($_GET['type']) {
+                                    case "inf":
+                                        echo $adres;
+                                        break;
+                                    case "edit":
+                                        echo "<input class=\"form-control\" type=\"text\" placeholder='Adres' value=\"$adres\" name=\"adres\">";
+                                        break;
+                                    case "new":
+                                        echo "<input class=\"form-control\" type=\"text\" placeholder='Adres' name=\"adres\">";
+                                        break;
+                                }
                             ?></td>
                     </tr>
-                </tbody>
-                </form>
 
-            </table>
+                    </tbody>
+                </table>
+
+            <?php
+                switch ($_GET['type']) {
+                    case "edit":
+                        echo "<input type='hidden' name='master' value='pat'>";
+                        echo "<input type='hidden' name='type' value='edit'>";
+                        echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $name\">";
+                        break;
+                    case "new":
+                        echo "<input type='hidden' name='master' value='pat'>";
+                        echo "<input type='hidden' name='type' value='new'>";
+                        echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
+                        break;
+                }
+            ?>
+
+            </form>
 
             <!--recepten van patient-->
             <table class="table table - striped">
 
                 <?php
-                if ($_GET['type'] == 'inf') {
-                    $query = $db->prepare("SELECT * FROM recepten WHERE patid=" . $_GET['id']);
-                    if ($query->execute()) {
-                        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-                        if (sizeof($result) != 0) {
-                            echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Recepten</h1>";
-                            echo "<thead>
+                    if ($_GET['type'] == 'inf') {
+                        $query = $db->prepare("SELECT * FROM recepten WHERE patid=" . $_GET['id']);
+                        if ($query->execute()) {
+                            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                            if (sizeof($result) != 0) {
+                                echo "<h1 style='margin: 3rem 0' class='text-dark font-weight-bold'>Recepten</h1>";
+                                echo "<thead>
                                     <tr>
                                         <th><p>Medicijn:</p></th>
                                         <th><p>Datum uitgeschreven:</p></th>
@@ -291,59 +300,42 @@ try {
                                     </tr>
                     </thead>
                      <tbody>";
-                        }
-                        foreach ($result as &$data) {
-                            echo "<tr>";
-                            echo "<td>";
-                            $querypat = $db->prepare("SELECT naam FROM medicijnen WHERE id = " . $data['medicijn']);
-
-                            if ($querypat->execute()) {
-                                $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
-
-                                foreach ($resultpat as &$datapat) {
-                                    echo $datapat['naam'];
-                                }
-                            } else {
-                                echo "Error";
                             }
-                            echo "</td>";
-                            echo "<td>";
-                            echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
-                            echo "</td>";
-                            echo "<td>";
-                            if ($data['opgehaald'] == 1) {
-                                echo "<p class='font-weight-bold text-success'>Opgehaald</p>";
-                            } else {
-                                echo "<p class='font-weight-bold text-danger'>Niet opgehaald</p>";
-                            };
-                            echo "</td>";
+                            foreach ($result as &$data) {
+                                echo "<tr>";
+                                echo "<td>";
+                                $querypat = $db->prepare("SELECT naam FROM medicijnen WHERE id = " . $data['medicijn']);
+
+                                if ($querypat->execute()) {
+                                    $resultpat = $querypat->fetchAll(PDO::FETCH_ASSOC);
+
+                                    foreach ($resultpat as &$datapat) {
+                                        echo $datapat['naam'];
+                                    }
+                                } else {
+                                    echo "Error";
+                                }
+                                echo "</td>";
+                                echo "<td>";
+                                echo date("d-m-Y", strtotime($data['datumuitgeschreven']));
+                                echo "</td>";
+                                echo "<td>";
+                                if ($data['opgehaald'] == 1) {
+                                    echo "<p class='font-weight-bold text-success'>Opgehaald</p>";
+                                } else {
+                                    echo "<p class='font-weight-bold text-danger'>Niet opgehaald</p>";
+                                };
+                                echo "</td>";
+                            }
+                            echo '</tbody>';
+                        } else {
+                            echo "Er is een fout opgetreden";
                         }
-                    } else {
-                        echo "Er is een fout opgetreden";
                     }
-                }
                 ?>
 
-                </tbody>
+
             </table>
-
-            <?php
-            switch ($_GET['type']) {
-                case "edit":
-                    echo "<input type='hidden' name='master' value='pat'>";
-                    echo "<input type='hidden' name='type' value='edit'>";
-                    echo "<input style='margin-top: 2rem' class=\"btn bg-warning text-white font-weight-bold form-control\" type=\"submit\" value=\"Wijzig $name\">";
-                    break;
-                case "new":
-                    echo "<input type='hidden' name='master' value='pat'>";
-                    echo "<input type='hidden' name='type' value='new'>";
-                    echo "<input style='margin-top: 2rem' class=\"btn btn-success text-white font-weight-bold form-control\" type=\"submit\" value=\"Patient Toevoegen\">";
-                    break;
-            }
-            ?>
-
-
-            </form>
 
 
         </div>

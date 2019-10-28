@@ -2,18 +2,18 @@
 <html lang="en">
 
 <?php
-include("dbconnection.php");
-try {
-    $query = $db->prepare("SELECT * FROM artsen WHERE id=" . $_GET['id']);
-    $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($result as &$data) {
-        $name = $data['naam'];
-        $id = $data['id'];
-    }
-} catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
-};
+    include("dbconnection.php");
+    try {
+        $query = $db->prepare("SELECT * FROM artsen WHERE id=" . $_GET['id']);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as &$data) {
+            $name = $data['naam'];
+            $id = $data['id'];
+        }
+    } catch (PDOException $e) {
+        die("Error: " . $e->getMessage());
+    };
 ?>
 
 <head>
@@ -56,27 +56,27 @@ try {
                 </li>
                 <?php
 
-                session_start();
+                    session_start();
 
-                if (isset($_SESSION['user'])) {
-                    switch ($_SESSION['user']) {
-                        case "verz":
-                            echo "<li class=\"nav-item\"><a class=\"nav-link active\" href=\"artsen.php\">Artsen</a></li>";
-                        case "arts":
-                            echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
-                        case "app":
-                            echo "
+                    if (isset($_SESSION['user'])) {
+                        switch ($_SESSION['user']) {
+                            case "verz":
+                                echo "<li class=\"nav-item\"><a class=\"nav-link active\" href=\"artsen.php\">Artsen</a></li>";
+                            case "arts":
+                                echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"medicijnen.php\">Medicijnen</a></li>";
+                            case "app":
+                                echo "
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"recepten.php\">Recepten</a></li>
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"patienten.php\">Patienten</a></li>
                         <li class=\"nav-item\"><a class=\"nav-link\" href=\"contact.php\">Contact</a></li>";
 
-                            break;
+                                break;
 
-                        default:
-                            break;
+                            default:
+                                break;
 
+                        }
                     }
-                }
 
                 ?>
             </ul>
@@ -131,7 +131,6 @@ try {
                                     break;
                             }
                             ?>
-
                 </tbody>
             </table>
 
