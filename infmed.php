@@ -186,7 +186,7 @@
 
 
                                 switch ($_GET['type']) {
-
+                                    case "edit":
                                     case "inf":
                                         //maakt list van de array met bijwerkingen
                                         for ($i = 0; $i < sizeof($bijwerkingen); $i++) {
